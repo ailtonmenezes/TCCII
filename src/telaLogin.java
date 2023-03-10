@@ -4,21 +4,26 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class telaLogin extends JFrame {
     public telaLogin() {
         super("SisBras");
-
-        JButton btnLogin = new JButton("Entrar");
-        btnLogin.addActionListener(new btnEntrar());
 
         // Carrega a imagem
 
@@ -43,13 +48,93 @@ public class telaLogin extends JFrame {
             }
         };
 
+        JButton btnEntrar = new JButton("Entrar");
+        btnEntrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String senha = "";
+                String usuario = "";
+
+                Connection connection = null;
+                PreparedStatement statement = null;
+                ResultSet resultSet = null;
+
+                try {
+                    // Carregar o driver
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+
+                    // Estabelecer conexão com o banco de dados
+                    connection = DriverManager.getConnection(
+                            "jdbc:mysql://localhost:3306/unicesumartcc",
+                            "root",
+                            "KMvd96ui45!");
+
+                    // Criar a consulta SQL
+                    String sql = "SELECT loginpessoa, senhapessoa FROM pessoa " +
+                            "UNION SELECT loginpessoa, senhapessoa FROM consultor " +
+                            "UNION SELECT loginpessoa, senhapessoa FROM empresa " +
+                            "UNION SELECT loginpessoa, senhapessoa FROM inst_ensino " +
+                            "UNION SELECT loginpessoa, senhapessoa FROM inst_saude";
+
+                    statement = connection.prepareStatement(sql);
+
+                    // Executar a consulta
+                    resultSet = statement.executeQuery();
+
+                    // Iterar sobre os resultados da consulta
+                    boolean loginValido = false;
+                    while (resultSet.next()) {
+                        usuario = resultSet.getString("loginpessoa");
+                        senha = resultSet.getString("senhapessoa");
+
+                        if (textLogin.getText().equals("") || textLogin.getText() == null
+                                || textSenha.getPassword().length == 0) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Por favor preencha os campos solicitados!!");
+                            break;
+                        } else if (textLogin.getText().equals(usuario) &&
+                                Arrays.equals(textSenha.getPassword(), senha.toCharArray())) {
+                            // cadastroDePessoas.setVisible(true);
+                            loginValido = true;
+                            dispose();
+                            break;
+                        }
+                    }
+
+                    if (!loginValido && !resultSet.isBeforeFirst() && !resultSet.next()) {
+                        JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido!!");
+                        textLogin.setText("");
+                        textSenha.setText("");
+                    }
+
+                } catch (SQLException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                } finally {
+                    // Fechar a conexão, o statement e o resultSet
+                    try {
+                        if (resultSet != null) {
+                            resultSet.close();
+                        }
+                        if (statement != null) {
+                            statement.close();
+                        }
+                        if (connection != null) {
+                            connection.close();
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
         // Define a posição e o tamanho do JLabel
         labelImagem.setBounds(270, 150, newWidth, newHeight);
         usuarioLogin.setBounds(220, 250, newWidth, newHeight);
         textLogin.setBounds(270, 270, 250, 20);
         senhaLogin.setBounds(220, 300, newWidth, newHeight);
         textSenha.setBounds(270, 320, 250, 20);
-        btnLogin.setBounds(345, 400, 90, 30);
+        btnEntrar.setBounds(345, 400, 90, 30);
         // Define um layout nulo para o JFrame
         setLayout(null);
 
@@ -59,7 +144,7 @@ public class telaLogin extends JFrame {
         add(senhaLogin);
         add(textSenha);
         add(labelImagem);
-        add(btnLogin);
+        add(btnEntrar);
 
         // Configura a janela
         setIconImage(sisbrasImageIcon.getImage());
@@ -74,7 +159,6 @@ public class telaLogin extends JFrame {
     JLabel senhaLogin = new JLabel("Senha:");
     JTextField textLogin = new JTextField();
     JPasswordField textSenha = new JPasswordField();
-    JButton btnLogin = new JButton("Entrar");
 
     public static void main(String[] args) {
         telaLogin tLogin = new telaLogin();
