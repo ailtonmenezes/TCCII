@@ -128,7 +128,7 @@ public class telaLogin extends JFrame {
             }
         });
 
-        // Define a posição e o tamanho do JLabel
+        // Define a posição e o tamanho dos itens
         labelImagem.setBounds(270, 150, newWidth, newHeight);
         usuarioLogin.setBounds(220, 250, newWidth, newHeight);
         textLogin.setBounds(270, 270, 250, 20);
