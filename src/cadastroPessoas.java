@@ -28,6 +28,8 @@ public class cadastroPessoas extends JFrame {
         JTextField textLoginpessoa = new JTextField();
         JLabel labelSenha = new JLabel("Senha:");
         JTextField textSenha = new JTextField();
+        JLabel labelConfirmSenha = new JLabel("Confirme Senha:");
+        JTextField textConfirmSenha = new JTextField();
         JLabel labelNome = new JLabel("Nome:");
         JTextField textNome = new JTextField();
         JLabel labelProfissao = new JLabel("Profissão:");
@@ -41,7 +43,6 @@ public class cadastroPessoas extends JFrame {
         JLabel labelDataNascimento = new JLabel("Data de Nascimento:");
         JTextField textDataNascimento = new JTextField();
         JLabel labelSexo = new JLabel("Sexo:");
-        ButtonGroup groupSexo = new ButtonGroup();
         JRadioButton radioMasculino = new JRadioButton("M");
         JRadioButton radioFeminino = new JRadioButton("F");
         JRadioButton radioOutro = new JRadioButton("Outro");
@@ -54,7 +55,7 @@ public class cadastroPessoas extends JFrame {
         JRadioButton radioSolteiro = new JRadioButton("Solteiro(a)");
         JRadioButton radioSeparado = new JRadioButton("Separado(a)");
         JRadioButton radioViuvo = new JRadioButton("Viúvo(a)");
-        JRadioButton radioOutros = new JRadioButton("Outros(a)");
+        JRadioButton radioOutros = new JRadioButton("Outro(a)");
         JLabel labelEncaminhamentoEscolar = new JLabel("Encaminhamento Escolar:");
         JRadioButton radioEncaminhamentoEscolarSim = new JRadioButton("Sim");
         JRadioButton radioEncaminhamentoEscolarNao = new JRadioButton("Não");
@@ -75,6 +76,19 @@ public class cadastroPessoas extends JFrame {
         JLabel consultor = new JLabel("Consultor:");
         JLabel idConsultor = new JLabel("nome");
 
+        // Cria os grupos
+        ButtonGroup groupSexo = new ButtonGroup();
+        groupSexo.add(radioMasculino);
+        groupSexo.add(radioFeminino);
+        groupSexo.add(radioOutro);
+
+        ButtonGroup groupEstadoCivil = new ButtonGroup();
+        groupEstadoCivil.add(radioCasado);
+        groupEstadoCivil.add(radioSolteiro);
+        groupEstadoCivil.add(radioSeparado);
+        groupEstadoCivil.add(radioViuvo);
+        groupEstadoCivil.add(radioOutros);
+
         // Ações dos botões
         // Ação do botão Salvar
         btnSalvar.addActionListener(new ActionListener() {
@@ -88,12 +102,16 @@ public class cadastroPessoas extends JFrame {
                 String cpf = textCPF.getText();
                 String escolaridade = textEscolaridade.getText();
                 String dataNascimento = textDataNascimento.getText();
+                radioMasculino.setActionCommand("M");
+                radioFeminino.setActionCommand("F");
+                radioOutro.setActionCommand("Outro");
 
                 // Obter o sexo selecionado
                 ButtonModel selectedButton = groupSexo.getSelection();
                 String sexo = "";
                 if (selectedButton != null) {
                     sexo = selectedButton.getActionCommand();
+                    System.out.println(sexo);
                 }
 
                 try {
@@ -140,6 +158,8 @@ public class cadastroPessoas extends JFrame {
         add(textLoginpessoa);
         add(labelSenha);
         add(textSenha);
+        add(labelConfirmSenha);
+        add(textConfirmSenha);
         add(labelNome);
         add(textNome);
         add(labelProfissao);
@@ -187,7 +207,6 @@ public class cadastroPessoas extends JFrame {
         add(idConsultor);
 
         // Criar Menu
-
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
@@ -303,13 +322,14 @@ public class cadastroPessoas extends JFrame {
         radioCasado.setBounds(122, 250, 90, 50);
         radioSolteiro.setBounds(209, 250, 100, 50);
         radioSeparado.setBounds(305, 250, 100, 50);
-        radioViuvo.setBounds(401, 250, 100, 50);
-        labelEncaminhamentoEscolar.setBounds(500, 252, 190, 50);
-        radioEncaminhamentoEscolarSim.setBounds(650, 252, 60, 50);
-        radioEncaminhamentoEscolarNao.setBounds(710, 252, 60, 50);
-        labelEncaminhamentoTrabalho.setBounds(790, 252, 190, 50);
-        radioEncaminhamentoTrabalhoSim.setBounds(950, 252, 60, 50);
-        radioEncaminhamentoTrabalhoNao.setBounds(1010, 252, 60, 50);
+        radioViuvo.setBounds(401, 250, 90, 50);
+        radioOutros.setBounds(487, 250, 80, 50);
+        labelEncaminhamentoEscolar.setBounds(580, 252, 190, 50);
+        radioEncaminhamentoEscolarSim.setBounds(730, 252, 60, 50);
+        radioEncaminhamentoEscolarNao.setBounds(790, 252, 60, 50);
+        labelEncaminhamentoTrabalho.setBounds(870, 252, 190, 50);
+        radioEncaminhamentoTrabalhoSim.setBounds(1025, 252, 60, 50);
+        radioEncaminhamentoTrabalhoNao.setBounds(1082, 252, 60, 50);
         labelEncaminhamentoMedico.setBounds(50, 300, 190, 50);
         radioEncaminhamentoMedicoSim.setBounds(200, 300, 60, 50);
         radioEncaminhamentoMedicoNao.setBounds(260, 300, 60, 50);
@@ -321,6 +341,8 @@ public class cadastroPessoas extends JFrame {
         textLoginpessoa.setBounds(1035, 385, 100, 20);
         labelSenha.setBounds(1000, 410, 50, 30);
         textSenha.setBounds(1040, 415, 100, 20);
+        labelConfirmSenha.setBounds(1000, 440, 100, 20);
+        textConfirmSenha.setBounds(1100, 440, 100, 20);
         informacoesFamiliares.setBounds(50, 350, 350, 60);
         textInformacoesFamiliares.setBounds(50, 400, 350, 100);
         btnSalvar.setBounds(450, 600, 80, 30);
