@@ -24,7 +24,7 @@ public class cadastroPessoas extends JFrame {
         Font font2 = new Font("Arial", Font.BOLD, 15);
         JLabel titulo = new JLabel("Cadastro de Pessoas");
         JLabel cadastrarLoginSenha = new JLabel("Cadastrar Login e Senha");
-        JLabel labelLoginpessoa = new JLabel("ID:");
+        JLabel labelLoginpessoa = new JLabel("Login:");
         JTextField textLoginpessoa = new JTextField();
         JLabel labelSenha = new JLabel("Senha:");
         JTextField textSenha = new JTextField();
@@ -136,6 +136,8 @@ public class cadastroPessoas extends JFrame {
         // Adiciona os itens
         add(titulo);
         add(cadastrarLoginSenha);
+        add(labelLoginpessoa);
+        add(textLoginpessoa);
         add(labelSenha);
         add(textSenha);
         add(labelNome);
@@ -315,6 +317,10 @@ public class cadastroPessoas extends JFrame {
         radioEncaminhamentoMoradiaSim.setBounds(525, 300, 60, 50);
         radioEncaminhamentoMoradiaNao.setBounds(582, 300, 60, 50);
         cadastrarLoginSenha.setBounds(1000, 350, 200, 30);
+        labelLoginpessoa.setBounds(1000, 380, 50, 30);
+        textLoginpessoa.setBounds(1035, 385, 100, 20);
+        labelSenha.setBounds(1000, 410, 50, 30);
+        textSenha.setBounds(1040, 415, 100, 20);
         informacoesFamiliares.setBounds(50, 350, 350, 60);
         textInformacoesFamiliares.setBounds(50, 400, 350, 100);
         btnSalvar.setBounds(450, 600, 80, 30);
