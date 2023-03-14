@@ -1,7 +1,14 @@
 import java.awt.Font;
 import javax.swing.*;
+
+import java.sql.Statement;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class cadastroPessoas extends JFrame {
     public cadastroPessoas() {
@@ -17,6 +24,10 @@ public class cadastroPessoas extends JFrame {
         // Cria os itens
         Font font = new Font("Arial", Font.BOLD, 30);
         JLabel titulo = new JLabel("Cadastro de Pessoas");
+        JLabel labelLoginpessoa = new JLabel("ID:");
+        JTextField textLoginpessoa = new JTextField();
+        JLabel labelSenha = new JLabel("Senha:");
+        JTextField textSenha = new JTextField();
         JLabel labelNome = new JLabel("Nome:");
         JTextField textNome = new JTextField();
         JLabel labelProfissao = new JLabel("Profissão:");
@@ -30,6 +41,7 @@ public class cadastroPessoas extends JFrame {
         JLabel labelDataNascimento = new JLabel("Data de Nascimento:");
         JTextField textDataNascimento = new JTextField();
         JLabel labelSexo = new JLabel("Sexo:");
+        ButtonGroup groupSexo = new ButtonGroup();
         JRadioButton radioMasculino = new JRadioButton("M");
         JRadioButton radioFeminino = new JRadioButton("F");
         JRadioButton radioOutro = new JRadioButton("Outro");
@@ -42,6 +54,7 @@ public class cadastroPessoas extends JFrame {
         JRadioButton radioSolteiro = new JRadioButton("Solteiro(a)");
         JRadioButton radioSeparado = new JRadioButton("Separado(a)");
         JRadioButton radioViuvo = new JRadioButton("Viúvo(a)");
+        JRadioButton radioOutros = new JRadioButton("Outros(a)");
         JLabel labelEncaminhamentoEscolar = new JLabel("Encaminhamento Escolar:");
         JRadioButton radioEncaminhamentoEscolarSim = new JRadioButton("Sim");
         JRadioButton radioEncaminhamentoEscolarNao = new JRadioButton("Não");
@@ -62,11 +75,67 @@ public class cadastroPessoas extends JFrame {
         JLabel consultor = new JLabel("Consultor:");
         JLabel idConsultor = new JLabel("nome");
 
+        // Ações dos botões
+        // Ação do botão Salvar
+        btnSalvar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Obter o texto digitado nas caixas de texto
+                String loginPessoa = textLoginpessoa.getText();
+                String senhaPessoa = textSenha.getText();
+                String nome = textNome.getText();
+                String profissao = textProfissao.getText();
+                String rg = textRG.getText();
+                String cpf = textCPF.getText();
+                String escolaridade = textEscolaridade.getText();
+                String dataNascimento = textDataNascimento.getText();
+
+                // Obter o sexo selecionado
+                ButtonModel selectedButton = groupSexo.getSelection();
+                String sexo = "";
+                if (selectedButton != null) {
+                    sexo = selectedButton.getActionCommand();
+                }
+
+                try {
+                    // Estabelecer uma conexão com o banco de dados
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc", "root",
+                            "KMvd96ui45!");
+
+                    // Criar uma declaração SQL preparada
+                    PreparedStatement stmt = conn.prepareStatement(
+                            "INSERT INTO pessoa (loginpessoa, senhapessoa, nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    stmt.setString(1, loginPessoa);
+                    stmt.setString(2, senhaPessoa);
+                    stmt.setString(3, nome);
+                    stmt.setString(4, profissao);
+                    stmt.setString(5, rg);
+                    stmt.setString(6, cpf);
+                    stmt.setString(7, escolaridade);
+                    stmt.setString(8, dataNascimento);
+                    stmt.setString(9, sexo);
+
+                    // Executar a declaração SQL
+                    stmt.executeUpdate();
+
+                    // Fechar a conexão com o banco de dados
+                    conn.close();
+
+                    // Exibir uma mensagem de sucesso
+                    JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         // Escolha do tamanho da fonte para o itens
         titulo.setFont(font);
 
         // Adiciona os itens
         add(titulo);
+        add(labelSenha);
+        add(textSenha);
         add(labelNome);
         add(textNome);
         add(labelProfissao);
@@ -92,6 +161,7 @@ public class cadastroPessoas extends JFrame {
         add(radioSolteiro);
         add(radioSeparado);
         add(radioViuvo);
+        add(radioOutros);
         add(labelEncaminhamentoEscolar);
         add(radioEncaminhamentoEscolarSim);
         add(radioEncaminhamentoEscolarNao);
@@ -202,34 +272,6 @@ public class cadastroPessoas extends JFrame {
                 System.exit(0);
             }
         });
-
-        // Cria grupo de botões
-        ButtonGroup groupSexo = new ButtonGroup();
-        groupSexo.add(radioMasculino);
-        groupSexo.add(radioFeminino);
-        groupSexo.add(radioOutro);
-
-        ButtonGroup groupEstadoCivil = new ButtonGroup();
-        groupEstadoCivil.add(radioCasado);
-        groupEstadoCivil.add(radioSolteiro);
-        groupEstadoCivil.add(radioSeparado);
-        groupEstadoCivil.add(radioViuvo);
-
-        ButtonGroup groupEncaminhamentoEscolar = new ButtonGroup();
-        groupEncaminhamentoEscolar.add(radioEncaminhamentoEscolarSim);
-        groupEncaminhamentoEscolar.add(radioEncaminhamentoEscolarNao);
-
-        ButtonGroup groupEncaminhamentoTrabalho = new ButtonGroup();
-        groupEncaminhamentoTrabalho.add(radioEncaminhamentoTrabalhoSim);
-        groupEncaminhamentoTrabalho.add(radioEncaminhamentoTrabalhoNao);
-
-        ButtonGroup encaminhamentoMedico = new ButtonGroup();
-        encaminhamentoMedico.add(radioEncaminhamentoMedicoSim);
-        encaminhamentoMedico.add(radioEncaminhamentoMedicoNao);
-
-        ButtonGroup encaminhamentoMoradia = new ButtonGroup();
-        encaminhamentoMoradia.add(radioEncaminhamentoMoradiaSim);
-        encaminhamentoMoradia.add(radioEncaminhamentoMoradiaNao);
 
         // Define a posição e o tamanho dos itens
         titulo.setBounds(500, 10, 350, 60);

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "cadastroPessoas",
+            "request": "launch",
+            "mainClass": "cadastroPessoas",
+            "projectName": "TCCII_31526384"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
