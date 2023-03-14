@@ -89,6 +89,22 @@ public class cadastroPessoas extends JFrame {
         groupEstadoCivil.add(radioViuvo);
         groupEstadoCivil.add(radioOutros);
 
+        ButtonGroup groupEncaminhmentoEscolar = new ButtonGroup();
+        groupEncaminhmentoEscolar.add(radioEncaminhamentoEscolarSim);
+        groupEncaminhmentoEscolar.add(radioEncaminhamentoEscolarNao);
+
+        ButtonGroup groupEncaminhmentoTrabalho = new ButtonGroup();
+        groupEncaminhmentoTrabalho.add(radioEncaminhamentoTrabalhoSim);
+        groupEncaminhmentoTrabalho.add(radioEncaminhamentoTrabalhoNao);
+
+        ButtonGroup groupEncaminhmentoMedico = new ButtonGroup();
+        groupEncaminhmentoMedico.add(radioEncaminhamentoMedicoSim);
+        groupEncaminhmentoMedico.add(radioEncaminhamentoMedicoNao);
+
+        ButtonGroup groupEncaminhmentoMoradia = new ButtonGroup();
+        groupEncaminhmentoMoradia.add(radioEncaminhamentoMoradiaSim);
+        groupEncaminhmentoMoradia.add(radioEncaminhamentoMoradiaNao);
+
         // Ações dos botões
         // Ação do botão Salvar
         btnSalvar.addActionListener(new ActionListener() {
@@ -105,14 +121,54 @@ public class cadastroPessoas extends JFrame {
                 radioMasculino.setActionCommand("M");
                 radioFeminino.setActionCommand("F");
                 radioOutro.setActionCommand("Outro");
+                radioCasado.setActionCommand("Casado");
+                radioSolteiro.setActionCommand("Solteiro");
+                radioSeparado.setActionCommand("Separado");
+                radioViuvo.setActionCommand("Viúvo");
+                radioOutros.setActionCommand("Outro");
+                radioEncaminhamentoEscolarSim.setActionCommand("Sim");
+                radioEncaminhamentoEscolarNao.setActionCommand("Não");
+                radioEncaminhamentoMedicoSim.setActionCommand("Sim");
+                radioEncaminhamentoMedicoNao.setActionCommand("Não");
+                radioEncaminhamentoTrabalhoSim.setActionCommand("Sim");
+                radioEncaminhamentoTrabalhoNao.setActionCommand("Não");
+                radioEncaminhamentoMoradiaSim.setActionCommand("Sim");
+                radioEncaminhamentoMoradiaNao.setActionCommand("Não");
+                String naturalidade = textNaturalidade.getText();
+                String uf = textUF.getText();
 
                 // Obter o sexo selecionado
                 ButtonModel selectedButton = groupSexo.getSelection();
                 String sexo = "";
                 if (selectedButton != null) {
                     sexo = selectedButton.getActionCommand();
-                    System.out.println(sexo);
                 }
+
+                String estado_civil = "";
+                if (selectedButton != null) {
+                    estado_civil = selectedButton.getActionCommand();
+                }
+
+                String escolar = "";
+                if (selectedButton != null) {
+                    escolar = selectedButton.getActionCommand();
+                }
+
+                String medico = "";
+                if (selectedButton != null) {
+                    medico = selectedButton.getActionCommand();
+                }
+
+                String trabalho = "";
+                if (selectedButton != null) {
+                    trabalho = selectedButton.getActionCommand();
+                }
+
+                String moradia = "";
+                if (selectedButton != null) {
+                    moradia = selectedButton.getActionCommand();
+                }
+                String observacoes = textInformacoesFamiliares.getText();
 
                 try {
                     // Estabelecer uma conexão com o banco de dados
@@ -121,7 +177,7 @@ public class cadastroPessoas extends JFrame {
 
                     // Criar uma declaração SQL preparada
                     PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT INTO pessoa (loginpessoa, senhapessoa, nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            "INSERT INTO pessoa (loginpessoa, senhapessoa, nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo,naturalidade,uf,estado_civil,escolar,medico,trabalho,moradia,observacoes) VALUES (?,?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     stmt.setString(1, loginPessoa);
                     stmt.setString(2, senhaPessoa);
                     stmt.setString(3, nome);
@@ -131,6 +187,14 @@ public class cadastroPessoas extends JFrame {
                     stmt.setString(7, escolaridade);
                     stmt.setString(8, dataNascimento);
                     stmt.setString(9, sexo);
+                    stmt.setString(10, naturalidade);
+                    stmt.setString(11, uf);
+                    stmt.setString(12, estado_civil);
+                    stmt.setString(13, escolar);
+                    stmt.setString(14, medico);
+                    stmt.setString(15, trabalho);
+                    stmt.setString(16, moradia);
+                    stmt.setString(17, observacoes);
 
                     // Executar a declaração SQL
                     stmt.executeUpdate();
