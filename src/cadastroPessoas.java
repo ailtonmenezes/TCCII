@@ -1,8 +1,6 @@
 import java.awt.Font;
 import javax.swing.*;
 
-import java.sql.Statement;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -18,12 +16,14 @@ public class cadastroPessoas extends JFrame {
 
         setSize(800, 600);
         setVisible(true);
-
+        setExtendedState(MAXIMIZED_BOTH);
         setLayout(null);
 
         // Cria os itens
         Font font = new Font("Arial", Font.BOLD, 30);
+        Font font2 = new Font("Arial", Font.BOLD, 15);
         JLabel titulo = new JLabel("Cadastro de Pessoas");
+        JLabel cadastrarLoginSenha = new JLabel("Cadastrar Login e Senha");
         JLabel labelLoginpessoa = new JLabel("ID:");
         JTextField textLoginpessoa = new JTextField();
         JLabel labelSenha = new JLabel("Senha:");
@@ -131,9 +131,11 @@ public class cadastroPessoas extends JFrame {
 
         // Escolha do tamanho da fonte para o itens
         titulo.setFont(font);
+        cadastrarLoginSenha.setFont(font2);
 
         // Adiciona os itens
         add(titulo);
+        add(cadastrarLoginSenha);
         add(labelSenha);
         add(textSenha);
         add(labelNome);
@@ -312,6 +314,7 @@ public class cadastroPessoas extends JFrame {
         labelEncaminhamentoMoradia.setBounds(340, 300, 190, 50);
         radioEncaminhamentoMoradiaSim.setBounds(525, 300, 60, 50);
         radioEncaminhamentoMoradiaNao.setBounds(582, 300, 60, 50);
+        cadastrarLoginSenha.setBounds(1000, 350, 200, 30);
         informacoesFamiliares.setBounds(50, 350, 350, 60);
         textInformacoesFamiliares.setBounds(50, 400, 350, 100);
         btnSalvar.setBounds(450, 600, 80, 30);
