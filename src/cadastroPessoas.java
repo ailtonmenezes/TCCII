@@ -11,6 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.awt.event.FocusAdapter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class cadastroPessoas extends JFrame {
     public cadastroPessoas() {
@@ -131,84 +135,104 @@ public class cadastroPessoas extends JFrame {
                 String naturalidade = textNaturalidade.getText();
                 String uf = textUF.getText();
 
-                // Obter o sexo selecionado
-                ButtonModel selectedButtonSexo = groupSexo.getSelection();
-                String sexo = "";
-                if (selectedButtonSexo != null) {
-                    sexo = selectedButtonSexo.getActionCommand();
+                // Valida CPF
+                boolean cpfValido = false;
+                String mensagemErro = "";
+                String cpfFormatado = cpf.replaceAll("[^0-9]+", "");
+                if (cpfFormatado.length() != 11) {
+                    mensagemErro = "CPF inválido. Por favor, digite um CPF válido.";
+                } else {
+                    try {
+                        Long.parseLong(cpfFormatado);
+                        cpfValido = true;
+                    } catch (NumberFormatException ex) {
+                        mensagemErro = "CPF inválido. Por favor, digite um CPF válido.";
+                    }
                 }
 
-                ButtonModel selectdButtonEstCivil = groupEstadoCivil.getSelection();
-                String estado_civil = "";
-                if (selectdButtonEstCivil != null) {
-                    estado_civil = selectdButtonEstCivil.getActionCommand();
-                }
+                if (cpfValido) {
+                    // Obter o sexo selecionado
+                    ButtonModel selectedButtonSexo = groupSexo.getSelection();
+                    String sexo = "";
+                    if (selectedButtonSexo != null) {
+                        sexo = selectedButtonSexo.getActionCommand();
+                    }
 
-                ButtonModel selectdButtonEscolar = groupEncaminhmentoEscolar.getSelection();
-                String escolar = "";
-                if (selectdButtonEscolar != null) {
-                    escolar = selectdButtonEscolar.getActionCommand();
-                }
+                    ButtonModel selectdButtonEstCivil = groupEstadoCivil.getSelection();
+                    String estado_civil = "";
+                    if (selectdButtonEstCivil != null) {
+                        estado_civil = selectdButtonEstCivil.getActionCommand();
+                    }
 
-                ButtonModel selectedButtonMedico = groupEncaminhmentoTrabalho.getSelection();
-                String medico = "";
-                if (selectedButtonMedico != null) {
-                    medico = selectedButtonMedico.getActionCommand();
-                }
+                    ButtonModel selectdButtonEscolar = groupEncaminhmentoEscolar.getSelection();
+                    String escolar = "";
+                    if (selectdButtonEscolar != null) {
+                        escolar = selectdButtonEscolar.getActionCommand();
+                    }
 
-                ButtonModel selectedButtonTrabalho = groupEncaminhmentoTrabalho.getSelection();
-                String trabalho = "";
-                if (selectedButtonTrabalho != null) {
-                    trabalho = selectedButtonTrabalho.getActionCommand();
-                }
+                    ButtonModel selectedButtonMedico = groupEncaminhmentoTrabalho.getSelection();
+                    String medico = "";
+                    if (selectedButtonMedico != null) {
+                        medico = selectedButtonMedico.getActionCommand();
+                    }
 
-                ButtonModel selectedButtonMoradia = groupEncaminhmentoMoradia.getSelection();
-                String moradia = "";
-                if (selectedButtonMoradia != null) {
-                    moradia = selectedButtonMoradia.getActionCommand();
-                }
-                String observacoes = textInformacoesFamiliares.getText();
+                    ButtonModel selectedButtonTrabalho = groupEncaminhmentoTrabalho.getSelection();
+                    String trabalho = "";
+                    if (selectedButtonTrabalho != null) {
+                        trabalho = selectedButtonTrabalho.getActionCommand();
+                    }
 
-                try {
-                    // Estabelecer uma conexão com o banco de dados
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc", "root",
-                            "KMvd96ui45!");
+                    ButtonModel selectedButtonMoradia = groupEncaminhmentoMoradia.getSelection();
+                    String moradia = "";
+                    if (selectedButtonMoradia != null) {
+                        moradia = selectedButtonMoradia.getActionCommand();
+                    }
+                    String observacoes = textInformacoesFamiliares.getText();
 
-                    // Criar uma declaração SQL preparada
-                    PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT INTO pessoa (nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo, naturalidade, uf, estado_civil, escolar, medico, trabalho, moradia, observacoes) "
-                                    +
-                                    "VALUES (?, ?, ?, ?, ?, DATE_FORMAT(STR_TO_DATE(?, '%d/%m/%Y'), '%Y-%m-%d'), ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    stmt.setString(1, nome);
-                    stmt.setString(2, profissao);
-                    stmt.setString(3, rg);
-                    stmt.setString(4, cpf);
-                    stmt.setString(5, escolaridade);
-                    stmt.setString(6, dataNascimento);
-                    stmt.setString(7, sexo);
-                    stmt.setString(8, naturalidade);
-                    stmt.setString(9, uf);
-                    stmt.setString(10, estado_civil);
-                    stmt.setString(11, escolar);
-                    stmt.setString(12, medico);
-                    stmt.setString(13, trabalho);
-                    stmt.setString(14, moradia);
-                    stmt.setString(15, observacoes);
+                    try {
+                        // Estabelecer uma conexão com o banco de dados
+                        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc",
+                                "root",
+                                "KMvd96ui45!");
 
-                    // Executar a declaração SQL
-                    stmt.executeUpdate();
+                        // Criar uma declaração SQL preparada
+                        PreparedStatement stmt = conn.prepareStatement(
+                                "INSERT INTO pessoa (nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo, naturalidade, uf, estado_civil, escolar, medico, trabalho, moradia, observacoes) "
+                                        +
+                                        "VALUES (?, ?, ?, ?, ?, DATE_FORMAT(STR_TO_DATE(?, '%d/%m/%Y'), '%Y-%m-%d'), ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        stmt.setString(1, nome);
+                        stmt.setString(2, profissao);
+                        stmt.setString(3, rg);
+                        stmt.setString(4, cpf);
+                        stmt.setString(5, escolaridade);
+                        stmt.setString(6, dataNascimento);
+                        stmt.setString(7, sexo);
+                        stmt.setString(8, naturalidade);
+                        stmt.setString(9, uf);
+                        stmt.setString(10, estado_civil);
+                        stmt.setString(11, escolar);
+                        stmt.setString(12, medico);
+                        stmt.setString(13, trabalho);
+                        stmt.setString(14, moradia);
+                        stmt.setString(15, observacoes);
 
-                    // Fechar a conexão com o banco de dados
-                    conn.close();
+                        // Executar a declaração SQL
+                        stmt.executeUpdate();
 
-                    // Exibir uma mensagem de sucesso
-                    JOptionPane.showMessageDialog(null, "Cadastro Efetuado com sucesso!");
+                        // Fechar a conexão com o banco de dados
+                        conn.close();
 
-                }
+                        // Exibir uma mensagem de sucesso
+                        JOptionPane.showMessageDialog(null, "Cadastro Efetuado com sucesso!");
 
-                catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
-                    ex.printStackTrace();
+                    }
+
+                    catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, mensagemErro);
                 }
             }
         });
