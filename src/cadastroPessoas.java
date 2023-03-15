@@ -1,6 +1,10 @@
 import java.awt.Font;
 import javax.swing.*;
-
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -172,7 +176,9 @@ public class cadastroPessoas extends JFrame {
 
                     // Criar uma declaração SQL preparada
                     PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT INTO pessoa (nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo,naturalidade,uf,estado_civil,escolar,medico,trabalho,moradia,observacoes) VALUES (?,?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?, ?)");
+                            "INSERT INTO pessoa (nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo, naturalidade, uf, estado_civil, escolar, medico, trabalho, moradia, observacoes) "
+                                    +
+                                    "VALUES (?, ?, ?, ?, ?, DATE_FORMAT(STR_TO_DATE(?, '%d/%m/%Y'), '%Y-%m-%d'), ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     stmt.setString(1, nome);
                     stmt.setString(2, profissao);
                     stmt.setString(3, rg);
@@ -198,8 +204,92 @@ public class cadastroPessoas extends JFrame {
                     // Exibir uma mensagem de sucesso
                     JOptionPane.showMessageDialog(null, "Cadastro Efetuado com sucesso!");
 
-                } catch (SQLException ex) {
+                }
+
+                catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
                     ex.printStackTrace();
+                }
+            }
+        });
+
+        // Adiciona PlaceHolder
+        textNome.setText("Digite seu nome completo");
+        textNome.setForeground(Color.GRAY);
+        textNome.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textNome.getText().equals("Digite seu nome completo")) {
+                    textNome.setText("");
+                    textNome.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textNome.getText().isEmpty()) {
+                    textNome.setText("Digite seu nome completo");
+                    textNome.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textCPF.setText("Ex: 12345678911");
+        textCPF.setForeground(Color.GRAY);
+        textCPF.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textCPF.getText().equals("Ex: 12345678911")) {
+                    textCPF.setText("");
+                    textCPF.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textCPF.getText().isEmpty()) {
+                    textCPF.setText("Ex: 12345678911");
+                    textCPF.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textDataNascimento.setText("Ex:dd/mm/aaaa");
+        textDataNascimento.setForeground(Color.GRAY);
+        textDataNascimento.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textDataNascimento.getText().equals("Ex:dd/mm/aaaa")) {
+                    textDataNascimento.setText("");
+                    textDataNascimento.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textDataNascimento.getText().isEmpty()) {
+                    textDataNascimento.setText("Ex:dd/mm/aaaa");
+                    textDataNascimento.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textProfissao.setText("Digite sua Profissão");
+        textProfissao.setForeground(Color.GRAY);
+        textProfissao.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textProfissao.getText().equals("Digite sua Profissão")) {
+                    textProfissao.setText("");
+                    textProfissao.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textProfissao.getText().isEmpty()) {
+                    textProfissao.setText("Digite sua Profissão");
+                    textProfissao.setForeground(Color.GRAY);
                 }
             }
         });
