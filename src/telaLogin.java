@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class telaLogin extends JFrame {
+
     public telaLogin() {
         super("SisBras");
 
@@ -70,11 +71,11 @@ public class telaLogin extends JFrame {
                             "KMvd96ui45!");
 
                     // Criar a consulta SQL
-                    String sql = "SELECT loginpessoa, senhapessoa FROM pessoa " +
-                            "UNION SELECT loginpessoa, senhapessoa FROM consultor " +
-                            "UNION SELECT loginpessoa, senhapessoa FROM empresa " +
-                            "UNION SELECT loginpessoa, senhapessoa FROM inst_ensino " +
-                            "UNION SELECT loginpessoa, senhapessoa FROM inst_saude";
+                    String sql = "SELECT loginpessoa, senhapessoa FROM pessoa ";
+                    // "UNION SELECT loginpessoa, senhapessoa FROM consultor " +
+                    // "UNION SELECT loginpessoa, senhapessoa FROM empresa " +
+                    // "UNION SELECT loginpessoa, senhapessoa FROM inst_ensino " +
+                    // "UNION SELECT loginpessoa, senhapessoa FROM inst_saude";
 
                     statement = connection.prepareStatement(sql);
 
@@ -91,17 +92,26 @@ public class telaLogin extends JFrame {
                                 || textSenha.getPassword().length == 0) {
                             JOptionPane.showMessageDialog(null,
                                     "Por favor preencha os campos solicitados!!");
+
+                            if (textLogin.getText().length() < 6) {
+                                JOptionPane.showMessageDialog(null,
+                                        "O usuário precisa ter no mínimo 6 caratecteres!!!");
+                            } else if (textSenha.getPassword().length < 8) {
+                                JOptionPane.showMessageDialog(null, "A senha precisa ter no minimo 8 caratecteres!!!");
+                            }
                             break;
                         } else if (textLogin.getText().equals(usuario) &&
                                 Arrays.equals(textSenha.getPassword(), senha.toCharArray())) {
-                            // cadastroDePessoas.setVisible(true);
                             loginValido = true;
                             dispose();
                             break;
                         }
                     }
 
-                    if (!loginValido && !resultSet.isBeforeFirst() && !resultSet.next()) {
+                    if (loginValido) {
+                        cadastroPessoas cadastroPessoas = new cadastroPessoas();
+                        cadastroPessoas.setVisible(true);
+                    } else if (!resultSet.isBeforeFirst()) {
                         JOptionPane.showMessageDialog(null, "Usuário e/ou Senha Inválido!!");
                         textLogin.setText("");
                         textSenha.setText("");
@@ -135,6 +145,7 @@ public class telaLogin extends JFrame {
         senhaLogin.setBounds(220, 300, newWidth, newHeight);
         textSenha.setBounds(270, 320, 250, 20);
         btnEntrar.setBounds(345, 400, 90, 30);
+
         // Define um layout nulo para o JFrame
         setLayout(null);
 

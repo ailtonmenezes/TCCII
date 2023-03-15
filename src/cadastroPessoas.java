@@ -21,15 +21,7 @@ public class cadastroPessoas extends JFrame {
 
         // Cria os itens
         Font font = new Font("Arial", Font.BOLD, 30);
-        Font font2 = new Font("Arial", Font.BOLD, 15);
         JLabel titulo = new JLabel("Cadastro de Pessoas");
-        JLabel cadastrarLoginSenha = new JLabel("Cadastrar Login e Senha");
-        JLabel labelLoginpessoa = new JLabel("Login:");
-        JTextField textLoginpessoa = new JTextField();
-        JLabel labelSenha = new JLabel("Senha:");
-        JTextField textSenha = new JTextField();
-        JLabel labelConfirmSenha = new JLabel("Confirme Senha:");
-        JTextField textConfirmSenha = new JTextField();
         JLabel labelNome = new JLabel("Nome:");
         JTextField textNome = new JTextField();
         JLabel labelProfissao = new JLabel("Profissão:");
@@ -110,8 +102,6 @@ public class cadastroPessoas extends JFrame {
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Obter o texto digitado nas caixas de texto
-                String loginPessoa = textLoginpessoa.getText();
-                String senhaPessoa = textSenha.getText();
                 String nome = textNome.getText();
                 String profissao = textProfissao.getText();
                 String rg = textRG.getText();
@@ -138,35 +128,40 @@ public class cadastroPessoas extends JFrame {
                 String uf = textUF.getText();
 
                 // Obter o sexo selecionado
-                ButtonModel selectedButton = groupSexo.getSelection();
+                ButtonModel selectedButtonSexo = groupSexo.getSelection();
                 String sexo = "";
-                if (selectedButton != null) {
-                    sexo = selectedButton.getActionCommand();
+                if (selectedButtonSexo != null) {
+                    sexo = selectedButtonSexo.getActionCommand();
                 }
 
+                ButtonModel selectdButtonEstCivil = groupEstadoCivil.getSelection();
                 String estado_civil = "";
-                if (selectedButton != null) {
-                    estado_civil = selectedButton.getActionCommand();
+                if (selectdButtonEstCivil != null) {
+                    estado_civil = selectdButtonEstCivil.getActionCommand();
                 }
 
+                ButtonModel selectdButtonEscolar = groupEncaminhmentoEscolar.getSelection();
                 String escolar = "";
-                if (selectedButton != null) {
-                    escolar = selectedButton.getActionCommand();
+                if (selectdButtonEscolar != null) {
+                    escolar = selectdButtonEscolar.getActionCommand();
                 }
 
+                ButtonModel selectedButtonMedico = groupEncaminhmentoTrabalho.getSelection();
                 String medico = "";
-                if (selectedButton != null) {
-                    medico = selectedButton.getActionCommand();
+                if (selectedButtonMedico != null) {
+                    medico = selectedButtonMedico.getActionCommand();
                 }
 
+                ButtonModel selectedButtonTrabalho = groupEncaminhmentoTrabalho.getSelection();
                 String trabalho = "";
-                if (selectedButton != null) {
-                    trabalho = selectedButton.getActionCommand();
+                if (selectedButtonTrabalho != null) {
+                    trabalho = selectedButtonTrabalho.getActionCommand();
                 }
 
+                ButtonModel selectedButtonMoradia = groupEncaminhmentoMoradia.getSelection();
                 String moradia = "";
-                if (selectedButton != null) {
-                    moradia = selectedButton.getActionCommand();
+                if (selectedButtonMoradia != null) {
+                    moradia = selectedButtonMoradia.getActionCommand();
                 }
                 String observacoes = textInformacoesFamiliares.getText();
 
@@ -177,24 +172,22 @@ public class cadastroPessoas extends JFrame {
 
                     // Criar uma declaração SQL preparada
                     PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT INTO pessoa (loginpessoa, senhapessoa, nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo,naturalidade,uf,estado_civil,escolar,medico,trabalho,moradia,observacoes) VALUES (?,?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    stmt.setString(1, loginPessoa);
-                    stmt.setString(2, senhaPessoa);
-                    stmt.setString(3, nome);
-                    stmt.setString(4, profissao);
-                    stmt.setString(5, rg);
-                    stmt.setString(6, cpf);
-                    stmt.setString(7, escolaridade);
-                    stmt.setString(8, dataNascimento);
-                    stmt.setString(9, sexo);
-                    stmt.setString(10, naturalidade);
-                    stmt.setString(11, uf);
-                    stmt.setString(12, estado_civil);
-                    stmt.setString(13, escolar);
-                    stmt.setString(14, medico);
-                    stmt.setString(15, trabalho);
-                    stmt.setString(16, moradia);
-                    stmt.setString(17, observacoes);
+                            "INSERT INTO pessoa (nome, profissao, rg, cpf, escolaridade, data_nascimento, sexo,naturalidade,uf,estado_civil,escolar,medico,trabalho,moradia,observacoes) VALUES (?,?,?,?,?,?,?,?,?, ?, ?, ?, ?, ?, ?)");
+                    stmt.setString(1, nome);
+                    stmt.setString(2, profissao);
+                    stmt.setString(3, rg);
+                    stmt.setString(4, cpf);
+                    stmt.setString(5, escolaridade);
+                    stmt.setString(6, dataNascimento);
+                    stmt.setString(7, sexo);
+                    stmt.setString(8, naturalidade);
+                    stmt.setString(9, uf);
+                    stmt.setString(10, estado_civil);
+                    stmt.setString(11, escolar);
+                    stmt.setString(12, medico);
+                    stmt.setString(13, trabalho);
+                    stmt.setString(14, moradia);
+                    stmt.setString(15, observacoes);
 
                     // Executar a declaração SQL
                     stmt.executeUpdate();
@@ -203,7 +196,7 @@ public class cadastroPessoas extends JFrame {
                     conn.close();
 
                     // Exibir uma mensagem de sucesso
-                    JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Cadastro Efetuado com sucesso!");
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -213,17 +206,9 @@ public class cadastroPessoas extends JFrame {
 
         // Escolha do tamanho da fonte para o itens
         titulo.setFont(font);
-        cadastrarLoginSenha.setFont(font2);
 
         // Adiciona os itens
         add(titulo);
-        add(cadastrarLoginSenha);
-        add(labelLoginpessoa);
-        add(textLoginpessoa);
-        add(labelSenha);
-        add(textSenha);
-        add(labelConfirmSenha);
-        add(textConfirmSenha);
         add(labelNome);
         add(textNome);
         add(labelProfissao);
@@ -400,13 +385,6 @@ public class cadastroPessoas extends JFrame {
         labelEncaminhamentoMoradia.setBounds(340, 300, 190, 50);
         radioEncaminhamentoMoradiaSim.setBounds(525, 300, 60, 50);
         radioEncaminhamentoMoradiaNao.setBounds(582, 300, 60, 50);
-        cadastrarLoginSenha.setBounds(1000, 350, 200, 30);
-        labelLoginpessoa.setBounds(1000, 380, 50, 30);
-        textLoginpessoa.setBounds(1035, 385, 100, 20);
-        labelSenha.setBounds(1000, 410, 50, 30);
-        textSenha.setBounds(1040, 415, 100, 20);
-        labelConfirmSenha.setBounds(1000, 440, 100, 20);
-        textConfirmSenha.setBounds(1100, 440, 100, 20);
         informacoesFamiliares.setBounds(50, 350, 350, 60);
         textInformacoesFamiliares.setBounds(50, 400, 350, 100);
         btnSalvar.setBounds(450, 600, 80, 30);
