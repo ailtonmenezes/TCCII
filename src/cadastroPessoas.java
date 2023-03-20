@@ -12,9 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.awt.event.FocusAdapter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class cadastroPessoas extends JFrame {
     public cadastroPessoas() {
@@ -110,9 +107,9 @@ public class cadastroPessoas extends JFrame {
         // Ação do botão sair
         btnSair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a janela atual
                 telaLogin tela = new telaLogin();
                 tela.setVisible(true);
-                System.exit(0);
             }
         });
 
