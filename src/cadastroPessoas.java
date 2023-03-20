@@ -102,6 +102,30 @@ public class cadastroPessoas extends JFrame {
         groupEncaminhmentoMoradia.add(radioEncaminhamentoMoradiaNao);
 
         // Ações dos botões
+
+        // Ação do botão sair
+        btnSair.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                telaLogin tela = new telaLogin();
+                tela.setVisible(true);
+                System.exit(0);
+            }
+        });
+
+        // Ação do botão limpar
+        btnLimpar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textNome.setText("");
+                textProfissao.setText("");
+                textRG.setText("");
+                textCPF.setText("");
+                textEscolaridade.setText("");
+                textDataNascimento.setText("");
+                textNaturalidade.setText("");
+                textUF.setText("");
+            }
+        });
+
         // Ação do botão Salvar
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -214,12 +238,12 @@ public class cadastroPessoas extends JFrame {
         });
 
         // Adiciona PlaceHolder
-        textNome.setText("Digite seu nome completo");
+        textNome.setText("Informe o nome completo");
         textNome.setForeground(Color.GRAY);
         textNome.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textNome.getText().equals("Digite seu nome completo")) {
+                if (textNome.getText().equals("Informe o nome completo")) {
                     textNome.setText("");
                     textNome.setForeground(Color.BLACK);
                 }
@@ -228,12 +252,13 @@ public class cadastroPessoas extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 if (textNome.getText().isEmpty()) {
-                    textNome.setText("Digite seu nome completo");
+                    textNome.setText("Informe o nome completo");
                     textNome.setForeground(Color.GRAY);
                 }
             }
         });
 
+        // Setting the text of the textCPF to "Ex: 12345678911"
         textCPF.setText("Ex: 12345678911");
         textCPF.setForeground(Color.GRAY);
         textCPF.addFocusListener(new FocusListener() {
@@ -250,6 +275,26 @@ public class cadastroPessoas extends JFrame {
                 if (textCPF.getText().isEmpty()) {
                     textCPF.setText("Ex: 12345678911");
                     textCPF.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textRG.setText("Ex: 12345678911");
+        textRG.setForeground(Color.GRAY);
+        textRG.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textRG.getText().equals("Ex: 12345678911")) {
+                    textRG.setText("");
+                    textRG.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textRG.getText().isEmpty()) {
+                    textRG.setText("Ex: 12345678911");
+                    textRG.setForeground(Color.GRAY);
                 }
             }
         });
@@ -274,12 +319,12 @@ public class cadastroPessoas extends JFrame {
             }
         });
 
-        textProfissao.setText("Digite sua Profissão");
+        textProfissao.setText("Informe a Profissão");
         textProfissao.setForeground(Color.GRAY);
         textProfissao.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textProfissao.getText().equals("Digite sua Profissão")) {
+                if (textProfissao.getText().equals("Informe a Profissão")) {
                     textProfissao.setText("");
                     textProfissao.setForeground(Color.BLACK);
                 }
@@ -288,8 +333,68 @@ public class cadastroPessoas extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 if (textProfissao.getText().isEmpty()) {
-                    textProfissao.setText("Digite sua Profissão");
+                    textProfissao.setText("Informe a Profissão");
                     textProfissao.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textEscolaridade.setText("Informe a Escolaridade");
+        textEscolaridade.setForeground(Color.GRAY);
+        textEscolaridade.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textEscolaridade.getText().equals("Informe a Escolaridade")) {
+                    textEscolaridade.setText("");
+                    textEscolaridade.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textEscolaridade.getText().isEmpty()) {
+                    textEscolaridade.setText("Informe a Escolaridade");
+                    textEscolaridade.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textNaturalidade.setText("Informe a Naturalidade");
+        textNaturalidade.setForeground(Color.GRAY);
+        textNaturalidade.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textNaturalidade.getText().equals("Informe a Naturalidade")) {
+                    textNaturalidade.setText("");
+                    textNaturalidade.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textNaturalidade.getText().isEmpty()) {
+                    textNaturalidade.setText("Informe a Naturalide");
+                    textNaturalidade.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textUF.setText("Ex:Ba");
+        textUF.setForeground(Color.GRAY);
+        textUF.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textUF.getText().equals("Ex:Ba")) {
+                    textUF.setText("");
+                    textUF.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textUF.getText().isEmpty()) {
+                    textUF.setText("Ex:Ba");
+                    textUF.setForeground(Color.GRAY);
                 }
             }
         });
@@ -456,7 +561,7 @@ public class cadastroPessoas extends JFrame {
         labelNaturalidade.setBounds(50, 200, 80, 50);
         textNaturalidade.setBounds(130, 217, 300, 20);
         labelUF.setBounds(450, 202, 80, 50);
-        textUF.setBounds(473, 217, 30, 20);
+        textUF.setBounds(473, 217, 35, 20);
         labelEstadoCivil.setBounds(50, 250, 80, 50);
         radioCasado.setBounds(122, 250, 90, 50);
         radioSolteiro.setBounds(209, 250, 100, 50);

@@ -31,7 +31,7 @@ public class telaLogin extends JFrame {
         ImageIcon sisbrasImageIcon = new ImageIcon(new File("src/img/SISBRASLogo2.png").getAbsolutePath());
         Image sisbrasImage = sisbrasImageIcon.getImage();
 
-        // Redimensiona a imagem para 80% do tamanho original
+        // Redimensiona a imagem 
         int newWidth = (int) (sisbrasImage.getWidth(null) * 1.8);
         int newHeight = (int) (sisbrasImage.getHeight(null) * 1.8);
         Image scaledSisbrasImage = sisbrasImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
