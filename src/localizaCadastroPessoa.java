@@ -1,14 +1,8 @@
 import javax.swing.JFrame;
-import java.awt.Font;
 import javax.swing.*;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -81,22 +75,9 @@ public class localizaCadastroPessoa extends JFrame {
 
                 // cria botões de atualizar e sair
                 JButton btnAtualizar = new JButton("Salvar Alterações");
-                JButton btnSairConsulta = new JButton("Sair");
 
-                // adiciona os botões a um painel
                 JPanel botoes = new JPanel();
                 botoes.add(btnAtualizar);
-                botoes.add(btnSairConsulta);
-
-                // Ações dos botões
-                btnSairConsulta.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        dispose();
-                        cadastroPessoas cadPessoas = new cadastroPessoas();
-                        cadPessoas.setVisible(true);
-
-                    }
-                });
 
                 // adiciona o JTable a um JScrollPane
                 JScrollPane scrollPane = new JScrollPane(tabela);
@@ -106,7 +87,7 @@ public class localizaCadastroPessoa extends JFrame {
                 scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                 scrollPane.setPreferredSize(new Dimension(1200, 600));
 
-                // cria um painel que contém o JScrollPane e os botões
+                // cria um painel que contém o JScrollPane e o botão
                 JPanel painel = new JPanel(new BorderLayout());
                 painel.add(scrollPane, BorderLayout.CENTER);
                 painel.add(botoes, BorderLayout.SOUTH);
@@ -116,7 +97,7 @@ public class localizaCadastroPessoa extends JFrame {
                 frame.getContentPane().add(painel);
                 frame.pack();
                 frame.setLocationRelativeTo(null);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setVisible(true);
 
             } catch (SQLException ex) {

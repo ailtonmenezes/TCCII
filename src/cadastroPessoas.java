@@ -1,11 +1,8 @@
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
@@ -13,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
