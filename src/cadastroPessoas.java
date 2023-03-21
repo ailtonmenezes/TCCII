@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -478,7 +479,7 @@ public class cadastroPessoas extends JFrame {
         JMenu menuCadastro = new JMenu("Cadastros");
         menuBar.add(menuCadastro);
 
-        JMenu cadastro = new JMenu("Cadastrar Pessoa");
+        JMenu cadastro = new JMenu("Localizar Pessoa");
         menuCadastro.add(cadastro);
 
         JMenuItem localizarPessoa = new JMenuItem("Localizar Cadastro");
@@ -542,8 +543,7 @@ public class cadastroPessoas extends JFrame {
         // Ação do Menu Localizar
         localizarPessoa.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                localizaCadastroPessoa localizaCadPessoa = new localizaCadastroPessoa();
-                localizaCadPessoa.setVisible(true);
+                new localizaCadastroPessoa();
             }
         });
         sobreMenuItem.addActionListener(new ActionListener() {
@@ -614,6 +614,13 @@ public class cadastroPessoas extends JFrame {
         btnSair.setBounds(750, 600, 80, 30);
         consultor.setBounds(50, 650, 80, 30);
         idConsultor.setBounds(115, 650, 80, 30);
+
+        textInformacoesFamiliares.setLineWrap(true);
+        textInformacoesFamiliares.setWrapStyleWord(true);
+
+        Dimension preferredSize = new Dimension(400, textInformacoesFamiliares.getPreferredSize().height);
+        textInformacoesFamiliares.setPreferredSize(preferredSize);
+
     }
 
     public static void main(String[] args) {

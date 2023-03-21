@@ -3,8 +3,6 @@ import javax.swing.*;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -68,7 +66,7 @@ public class localizaCadastroPessoa extends JFrame {
                 // cria um array com os nomes das colunas da tabela
                 String[] colunas = { "ID", "Nome", "RG", "CPF", "Profissão", "Escolaridade", "Nascimento",
                         "Sexo", "Naturalidade", "UF", "Estado Civil", "Enc.Escola", "Enc.Trabalho",
-                        "Enc.Médico", "Ind.Moradia", "Observações" };
+                        "Enc.Médico", "Enc.Moradia", "Observações" };
 
                 // cria um JTable com os dados e as colunas especificados
                 JTable tabela = new JTable(dados, colunas);
