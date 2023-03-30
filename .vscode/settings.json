@@ -4,5 +4,31 @@
     ],
     "java.project.referencedLibraries": [
         "C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.32.jar"
+    ],
+    "cSpell.words": [
+        "Adiciona",
+        "cadastrar",
+        "Cadastro",
+        "caixa",
+        "CNPJ",
+        "Cria",
+        "educação",
+        "Endereço",
+        "Escolha",
+        "Escolhe",
+        "Instituição",
+        "itens",
+        "moradia",
+        "opções",
+        "Parceiro",
+        "Parceiros",
+        "posição",
+        "Razão",
+        "saúde",
+        "seleção",
+        "tamanho",
+        "tipo",
+        "título",
+        "trabalho"
     ]
 }

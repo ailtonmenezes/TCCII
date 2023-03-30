@@ -73,9 +73,13 @@ public class localizaCadastroPessoa extends JFrame {
 
                 // cria botões de atualizar e sair
                 JButton btnAtualizar = new JButton("Salvar Alterações");
+                JButton btnExcluir = new JButton("Excluir");
+                JButton btnSair = new JButton("Sair");
 
                 JPanel botoes = new JPanel();
                 botoes.add(btnAtualizar);
+                botoes.add(btnExcluir);
+                botoes.add(btnSair);
 
                 // adiciona o JTable a um JScrollPane
                 JScrollPane scrollPane = new JScrollPane(tabela);
