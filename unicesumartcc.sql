@@ -3,109 +3,48 @@ CREATE DATABASE unicesumartcc;
 USE unicesumartcc;
 
 CREATE TABLE
-    endereco (
-        id_endereco INT NOT NULL AUTO_INCREMENT,
-        rua VARCHAR(50),
-        numero VARCHAR(10),
-        complemento VARCHAR(30),
-        bairro VARCHAR(30),
-        cidade VARCHAR(20),
-        estado VARCHAR(10),
-        cep VARCHAR(10),
-        PRIMARY KEY (id_endereco)
-    );
-
-CREATE TABLE
-    inst_saude(
-        id_saude INT NOT NULL AUTO_INCREMENT,
-        loginpessoa VARCHAR(20),
-        senhapessoa VARCHAR(20),
-        razao_social VARCHAR(50),
-        cnpj VARCHAR(20),
-        telefone1 VARCHAR(15),
-        telefone2 VARCHAR(15),
-        email VARCHAR (30),
-        pagina VARCHAR(30),
-        id_endereco INT,
-        PRIMARY KEY (id_saude),
-        FOREIGN KEY (id_endereco) REFERENCES endereco (id_endereco)
-    );
-
-CREATE TABLE
-    inst_ensino(
-        id_ensino INT NOT NULL AUTO_INCREMENT,
-        loginpessoa VARCHAR(20),
-        senhapessoa VARCHAR(20),
-        razao_social VARCHAR(50),
-        cnpj VARCHAR(20),
-        telefone1 VARCHAR(15),
-        telefone2 VARCHAR(15),
-        email VARCHAR (30),
-        pagina VARCHAR(30),
-        id_endereco INT,
-        PRIMARY KEY (id_ensino),
-        FOREIGN KEY (id_endereco) REFERENCES endereco (id_endereco)
-    );
-
-CREATE TABLE
-    consultor(
-        id_consultor INT NOT NULL AUTO_INCREMENT,
-        loginpessoa VARCHAR(20),
-        senhapessoa VARCHAR(20),
-        nome VARCHAR(50),
-        rg VARCHAR(10),
-        cpf VARCHAR(11),
-        profissao VARCHAR(20),
-        escolaridade VARCHAR(30),
-        data_nascimento DATE,
-        sexo VARCHAR(1),
-        naturalidade VARCHAR(30),
-        estado_civil VARCHAR(1),
-        id_endereco int,
-        PRIMARY KEY (id_consultor),
-        FOREIGN KEY (id_endereco) REFERENCES endereco (id_endereco)
-    );
-
-CREATE TABLE
-    empresa(
-        id_empresa INT NOT NULL AUTO_INCREMENT,
-        loginpessoa VARCHAR(20),
-        senhapessoa VARCHAR(20),
-        razao_social VARCHAR(50),
-        cnpj VARCHAR(20),
-        telefone1 VARCHAR(15),
-        telefone2 VARCHAR(15),
-        email VARCHAR (30),
-        pagina VARCHAR(30),
-        id_endereco INT,
-        PRIMARY KEY (id_empresa),
-        FOREIGN KEY (id_endereco) REFERENCES endereco (id_endereco)
+    parceiros (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        razao_social VARCHAR(255) NOT NULL,
+        cnpj VARCHAR(14) NOT NULL,
+        tipo_parceiro VARCHAR(50) NOT NULL,
+        rua VARCHAR(255) NOT NULL,
+        numero INT(11) NOT NULL,
+        complemento VARCHAR(255),
+        bairro VARCHAR(100) NOT NULL,
+        cidade VARCHAR(100) NOT NULL,
+        uf VARCHAR(2) NOT NULL,
+        cep VARCHAR(8) NOT NULL,
+        telefone1 VARCHAR(20) NOT NULL,
+        telefone2 VARCHAR(20),
+        email VARCHAR(255) NOT NULL,
+        site VARCHAR(255),
+        nome_especialista VARCHAR(255),
+        especialidade VARCHAR(255),
+        PRIMARY KEY (id)
     );
 
 CREATE TABLE
     pessoa (
         id_pessoa INT NOT NULL AUTO_INCREMENT,
-        loginpessoa VARCHAR(20),
-        senhapessoa VARCHAR(20),
-        nome VARCHAR(30),
+        nome VARCHAR(30) NOT NULL,
+        profissao VARCHAR(30),
         rg VARCHAR(10),
-        cpf VARCHAR(11),
+        cpf VARCHAR(11) UNIQUE,
         escolaridade VARCHAR(30),
         data_nascimento DATE,
         sexo VARCHAR(1),
         naturalidade VARCHAR(30),
+        uf VARCHAR(2),
         estado_civil VARCHAR(1),
-        id_endereco INT,
-        id_ensino INT,
-        id_saude INT,
-        id_empresa INT,
-        id_consultor INT,
+        escolar VARCHAR(255),
+        medico VARCHAR(255),
+        trabalho VARCHAR(255),
+        moradia VARCHAR(255),
+        observacoes TEXT,
         PRIMARY KEY (id_pessoa),
-        FOREIGN KEY (id_endereco) REFERENCES endereco (id_endereco),
-        FOREIGN KEY(id_ensino) REFERENCES inst_ensino (id_ensino),
-        FOREIGN KEY(id_saude) REFERENCES inst_saude (id_saude),
-        FOREIGN KEY (id_empresa) REFERENCES empresa (id_empresa),
-        FOREIGN KEY(id_consultor) REFERENCES consultor (id_consultor)
+        id_parceiro INT,
+        FOREIGN KEY (id_parceiro) REFERENCES parceiros(id)
     );
 
 INSERT INTO

@@ -5,6 +5,13 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class cadastrarParceiros extends JFrame {
     public cadastrarParceiros() {
@@ -25,7 +32,7 @@ public class cadastrarParceiros extends JFrame {
         JTextField textRazaoSocial = new JTextField();
         JLabel labelCNPJ = new JLabel("CNPJ:");
         JTextField textCNPJ = new JTextField();
-        JComboBox<String> comboBox = new JComboBox<>(opcoes);
+        JComboBox<String> comboBoxTipoParceiro = new JComboBox<>(opcoes);
         JLabel labelParceiros = new JLabel("Escolha o tipo de Parceiro:");
         JLabel labelEndereco = new JLabel("Endereço:");
         JLabel labelRua = new JLabel("Rua:");
@@ -69,7 +76,7 @@ public class cadastrarParceiros extends JFrame {
         add(textRazaoSocial);
         add(labelCNPJ);
         add(textCNPJ);
-        add(comboBox);
+        add(comboBoxTipoParceiro);
         add(labelParceiros);
         add(labelEndereco);
         add(labelRua);
@@ -104,6 +111,97 @@ public class cadastrarParceiros extends JFrame {
         add(btnLimpar);
         add(btnSair);
 
+        // Ação do botão sair
+        btnSair.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Fecha a janela atual
+                telaLogin tela = new telaLogin();
+                tela.setVisible(true);
+            }
+        });
+
+        // Ação do botão limpar
+        btnLimpar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textRazaoSocial.setText("");
+                textCNPJ.setText("");
+                textRua.setText("");
+                textNumero.setText("");
+                textComplemento.setText("");
+                textBairro.setText("");
+                textCidade.setText("");
+                textUF.setText("");
+                textCEP.setText("");
+                textTelefone1.setText("");
+                textTelefone2.setText("");
+                textEmail.setText("");
+                textSite.setText("");
+                textNomeEspecialista.setText("");
+                textEspecialidade.setText("");
+            }
+        });
+
+        btnSalvar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Obter o texto digitado nas caixas de texto
+                String getRazaoSocial = textRazaoSocial.getText();
+                String getTextCNPJ = textCNPJ.getText();
+                String getTextRua = textRua.getText();
+                String getTextNumero = textNumero.getText();
+                String getTextComplemento = textComplemento.getText();
+                String getTextBairro = textBairro.getText();
+                String getTextCidade = textCidade.getText();
+                String getTextUF = textUF.getText();
+                String getTextCEP = textCEP.getText();
+                String getTextTelefone1 = textTelefone1.getText();
+                String getTextTelefone2 = textTelefone2.getText();
+                String getEmail = textEmail.getText();
+                String getSite = textSite.getText();
+                String getTextNomeEspecialista = textNomeEspecialista.getText();
+                String getTextEspecialidade = textEspecialidade.getText();
+                String getTipoParceiro = (String) comboBoxTipoParceiro.getSelectedItem();
+
+                try {
+                    // Estabelecer uma conexão com o banco de dados
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_parceiros", "usuario",
+                            "senha");
+
+                    // Criar uma declaração SQL preparada
+                    PreparedStatement stmt = conn.prepareStatement(
+                            "INSERT INTO parceiros (razao_social, cnpj, rua, numero, complemento, bairro, cidade, uf, cep, telefone1, telefone2, email, site, nome_especialista, especialidade, tipo_parceiro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    stmt.setString(1, getRazaoSocial);
+                    stmt.setString(2, getTextCNPJ);
+                    stmt.setString(3, getTextRua);
+                    stmt.setString(4, getTextNumero);
+                    stmt.setString(5, getTextComplemento);
+                    stmt.setString(6, getTextBairro);
+                    stmt.setString(7, getTextCidade);
+                    stmt.setString(8, getTextUF);
+                    stmt.setString(9, getTextCEP);
+                    stmt.setString(10, getTextTelefone1);
+                    stmt.setString(11, getTextTelefone2);
+                    stmt.setString(12, getEmail);
+                    stmt.setString(13, getSite);
+                    stmt.setString(14, getTextNomeEspecialista);
+                    stmt.setString(15, getTextEspecialidade);
+                    stmt.setString(16, getTipoParceiro);
+
+                    // Executar a declaração SQL
+                    stmt.executeUpdate();
+
+                    // Fechar a conexão com o banco de dados
+                    conn.close();
+
+                    // Exibir uma mensagem de sucesso
+                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         // Define a posição e o tamanho dos itens
         titulo.setBounds(500, 10, 350, 60);
         labelRazaoSocial.setBounds(50, 100, 80, 50);
@@ -111,7 +209,7 @@ public class cadastrarParceiros extends JFrame {
         labelCNPJ.setBounds(450, 98, 350, 60);
         textCNPJ.setBounds(500, 117, 300, 20);
         labelParceiros.setBounds(810, 100, 170, 50);
-        comboBox.setBounds(810, 140, 300, 20);
+        comboBoxTipoParceiro.setBounds(810, 140, 300, 20);
         labelEndereco.setBounds(50, 140, 70, 50);
         labelRua.setBounds(50, 180, 70, 20);
         textRua.setBounds(80, 180, 350, 20);

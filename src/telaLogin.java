@@ -71,7 +71,7 @@ public class telaLogin extends JFrame {
                             "KMvd96ui45!");
 
                     // Criar a consulta SQL
-                    String sql = "SELECT loginpessoa, senhapessoa FROM pessoa ";
+                    String sql = "SELECT loginpessoa, senhapessoa FROM parceiros ";
                     // "UNION SELECT loginpessoa, senhapessoa FROM consultor " +
                     // "UNION SELECT loginpessoa, senhapessoa FROM empresa " +
                     // "UNION SELECT loginpessoa, senhapessoa FROM inst_ensino " +

@@ -246,6 +246,21 @@ public class cadastroPessoas extends JFrame {
 
                         // Exibir uma mensagem de sucesso
                         JOptionPane.showMessageDialog(null, "Cadastro Efetuado com sucesso!");
+                        textNome.setText("");
+                        textProfissao.setText("");
+                        textRG.setText("");
+                        textCPF.setText("");
+                        textEscolaridade.setText("");
+                        textDataNascimento.setText("");
+                        groupSexo.clearSelection();
+                        groupEstadoCivil.clearSelection();
+                        groupEncaminhmentoEscolar.clearSelection();
+                        groupEncaminhmentoMedico.clearSelection();
+                        groupEncaminhmentoTrabalho.clearSelection();
+                        groupEncaminhmentoMoradia.clearSelection();
+                        textNaturalidade.setText("");
+                        textUF.setText("");
+                        textInformacoesFamiliares.setText("");
 
                     }
 
@@ -479,56 +494,23 @@ public class cadastroPessoas extends JFrame {
         JMenu menuCadastro = new JMenu("Cadastros");
         menuBar.add(menuCadastro);
 
-        JMenu cadastro = new JMenu("Localizar Pessoa");
+        JMenu cadastro = new JMenu("Localizar");
         menuCadastro.add(cadastro);
 
-        JMenuItem localizarPessoa = new JMenuItem("Localizar Cadastro");
+        JMenuItem localizarPessoa = new JMenuItem("Localizar Cadastro de Pessoas");
         cadastro.add(localizarPessoa);
 
-        JMenu cadastrarSaude = new JMenu("Cadastrar Instituição de Saúde");
-        menuCadastro.add(cadastrarSaude);
+        JMenuItem localizarParceiros = new JMenuItem("Localizar Cadastro de Parceiros");
+        cadastro.add(localizarParceiros);
 
-        JMenuItem novoCadastroSaude = new JMenuItem("Novo Cadastro");
-        cadastrarSaude.add(novoCadastroSaude);
+        JMenu cadastrarParceiro = new JMenu("Cadastrar");
+        menuCadastro.add(cadastrarParceiro);
 
-        JMenuItem localizarSaude = new JMenuItem("Localizar Cadastro");
-        cadastrarSaude.add(localizarSaude);
+        JMenuItem novoCadastroPessoa = new JMenuItem("Novo Cadastro de Pessoa");
+        cadastrarParceiro.add(novoCadastroPessoa);
 
-        JMenu cadastrarEnsino = new JMenu("Cadastrar Instituição de Ensino");
-        menuCadastro.add(cadastrarEnsino);
-
-        JMenuItem novoCadastroEnsino = new JMenuItem("Novo Cadastro");
-        cadastrarEnsino.add(novoCadastroEnsino);
-
-        JMenuItem localizarEnsino = new JMenuItem("Localizar Cadastro");
-        cadastrarEnsino.add(localizarEnsino);
-
-        JMenu cadastrarHabitacao = new JMenu("Cadastro para Habitação");
-        menuCadastro.add(cadastrarHabitacao);
-
-        JMenuItem novoCadastroHabitacao = new JMenuItem("Novo Cadastro");
-        cadastrarHabitacao.add(novoCadastroHabitacao);
-
-        JMenuItem localizarHabitacao = new JMenuItem("Localizar Cadastro");
-        cadastrarHabitacao.add(localizarHabitacao);
-
-        JMenu cadastrarEmprego = new JMenu("Cadastro para Emprego");
-        menuCadastro.add(cadastrarEmprego);
-
-        JMenuItem novoCadastroEmprego = new JMenuItem("Novo Cadastro");
-        cadastrarEmprego.add(novoCadastroEmprego);
-
-        JMenuItem localizarEmprego = new JMenuItem("Localizar Cadastro");
-        cadastrarEmprego.add(localizarEmprego);
-
-        JMenu cadastrarConsultor = new JMenu("Cadastro de Consultores");
-        menuCadastro.add(cadastrarConsultor);
-
-        JMenuItem novoCadastroConsultor = new JMenuItem("Novo Cadastro");
-        cadastrarConsultor.add(novoCadastroConsultor);
-
-        JMenuItem localizarConsultor = new JMenuItem("Localizar Cadastro");
-        cadastrarConsultor.add(localizarConsultor);
+        JMenuItem novoCadastroParceiro = new JMenuItem("Novo Cadastro de Parceiro");
+        cadastrarParceiro.add(novoCadastroParceiro);
 
         JMenu menuSobre = new JMenu("Sobre");
 
@@ -546,10 +528,27 @@ public class cadastroPessoas extends JFrame {
                 new localizaCadastroPessoa();
             }
         });
+        localizarParceiros.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new localizaCadastroParceiros();
+            }
+        });
+
+        novoCadastroPessoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new cadastroPessoas();
+            }
+        });
+
+        novoCadastroParceiro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new cadastrarParceiros();
+            }
+        });
         sobreMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
-                        "SisBras\nVersão Beta/Protótipo\nDesenvolvido por Ailton Menezes\nCopyright ©");
+                        "SisBras\nVersão Beta/Protótipo\nDesenvolvido por Ailton Menezes\nTCCII - Curso: Engenharia de Software\nUnivercidade: Unicesumar\nAno: 2023\nCopyright ©");
             }
         });
 
