@@ -1,17 +1,24 @@
+import java.awt.Color;
 import java.awt.Font;
-
+import java.awt.event.FocusListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.awt.Dimension;
+import javax.swing.*;
 
 public class cadastrarParceiros extends JFrame {
     public cadastrarParceiros() {
@@ -111,6 +118,85 @@ public class cadastrarParceiros extends JFrame {
         add(btnLimpar);
         add(btnSair);
 
+        // Criar Menu
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        JMenu menuCadastro = new JMenu("Cadastros");
+        menuBar.add(menuCadastro);
+
+        JMenu cadastro = new JMenu("Localizar");
+        menuCadastro.add(cadastro);
+
+        JMenuItem localizarPessoa = new JMenuItem("Localizar Cadastro de Pessoas");
+        cadastro.add(localizarPessoa);
+
+        JMenuItem localizarParceiros = new JMenuItem("Localizar Cadastro de Parceiros");
+        cadastro.add(localizarParceiros);
+
+        JMenu cadastrarParceiro = new JMenu("Cadastrar");
+        menuCadastro.add(cadastrarParceiro);
+
+        JMenuItem novoCadastroPessoa = new JMenuItem("Novo Cadastro de Pessoa");
+        cadastrarParceiro.add(novoCadastroPessoa);
+
+        JMenuItem novoCadastroParceiro = new JMenuItem("Novo Cadastro de Parceiro");
+        cadastrarParceiro.add(novoCadastroParceiro);
+
+        JMenu menuSobre = new JMenu("Sobre");
+
+        JMenuItem sobreMenuItem = new JMenuItem("SisBras");
+
+        menuSobre.add(sobreMenuItem);
+
+        menuBar.add(menuSobre);
+
+        // Ações do menu
+
+        // Ação do Menu Localizar
+        localizarPessoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new localizaCadastroPessoa();
+            }
+        });
+        localizarParceiros.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new localizaCadastroParceiros();
+            }
+        });
+
+        novoCadastroPessoa.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new cadastroPessoas();
+            }
+        });
+
+        novoCadastroParceiro.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new cadastrarParceiros();
+            }
+        });
+        sobreMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "SisBras\nVersão Beta/Protótipo\nDesenvolvido por Ailton Menezes\nTCCII - Curso: Engenharia de Software\nUnivercidade: Unicesumar\nAno: 2023\nCopyright ©");
+            }
+        });
+
+        JMenu menuOpcoes = new JMenu("Opções");
+
+        JMenuItem sairMenuItem = new JMenuItem("Sair");
+
+        menuOpcoes.add(sairMenuItem);
+
+        menuBar.add(menuOpcoes);
+
+        sairMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
         // Ação do botão sair
         btnSair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -163,8 +249,9 @@ public class cadastrarParceiros extends JFrame {
 
                 try {
                     // Estabelecer uma conexão com o banco de dados
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bd_parceiros", "usuario",
-                            "senha");
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc",
+                            "root",
+                            "KMvd96ui45!");
 
                     // Criar uma declaração SQL preparada
                     PreparedStatement stmt = conn.prepareStatement(
@@ -198,6 +285,307 @@ public class cadastrarParceiros extends JFrame {
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
                     ex.printStackTrace();
+                }
+            }
+        });
+
+        // Adiciona PlaceHolder
+        textRazaoSocial.setText("Informe o nome da empresa completo");
+        textRazaoSocial.setForeground(Color.GRAY);
+        textRazaoSocial.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textRazaoSocial.getText().equals("Informe o nome da empresa completo")) {
+                    textRazaoSocial.setText("");
+                    textRazaoSocial.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textRazaoSocial.getText().isEmpty()) {
+                    textRazaoSocial.setText("Informe o nome da empresa completo");
+                    textRazaoSocial.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textCNPJ.setText("Informe o CNPJ");
+        textCNPJ.setForeground(Color.GRAY);
+        textCNPJ.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textCNPJ.getText().equals("Informe o CNPJ")) {
+                    textCNPJ.setText("");
+                    textCNPJ.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textCNPJ.getText().isEmpty()) {
+                    textCNPJ.setText("Informe o CNPJ");
+                    textCNPJ.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textRua.setText("Informe o nome da rua");
+        textRua.setForeground(Color.GRAY);
+        textRua.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textRua.getText().equals("Informe o nome da rua")) {
+                    textRua.setText("");
+                    textRua.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textRua.getText().isEmpty()) {
+                    textRua.setText("Informe o nome da rua");
+                    textRua.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textNumero.setText("Número");
+        textNumero.setForeground(Color.GRAY);
+        textNumero.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textNumero.getText().equals("Número")) {
+                    textNumero.setText("");
+                    textNumero.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textNumero.getText().isEmpty()) {
+                    textNumero.setText("Número");
+                    textNumero.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textComplemento.setText("Informe o Complemento");
+        textComplemento.setForeground(Color.GRAY);
+        textComplemento.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textComplemento.getText().equals("Informe o Complemento")) {
+                    textComplemento.setText("");
+                    textComplemento.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textComplemento.getText().isEmpty()) {
+                    textComplemento.setText("Informe o Complemento");
+                    textComplemento.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textBairro.setText("Informe o Bairro");
+        textBairro.setForeground(Color.GRAY);
+        textBairro.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textBairro.getText().equals("Informe o Bairro")) {
+                    textBairro.setText("");
+                    textBairro.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textBairro.getText().isEmpty()) {
+                    textBairro.setText("Informe o Bairro");
+                    textBairro.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textCidade.setText("Informe o nome da Cidade");
+        textCidade.setForeground(Color.GRAY);
+        textCidade.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textCidade.getText().equals("Informe o nome da Cidade")) {
+                    textCidade.setText("");
+                    textCidade.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textCidade.getText().isEmpty()) {
+                    textCidade.setText("Informe o nome da Cidade");
+                    textCidade.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textUF.setText("UF");
+        textUF.setForeground(Color.GRAY);
+        textUF.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textUF.getText().equals("UF")) {
+                    textUF.setText("");
+                    textUF.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textUF.getText().isEmpty()) {
+                    textUF.setText("UF");
+                    textUF.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textCEP.setText("Ex:44700-000");
+        textCEP.setForeground(Color.GRAY);
+        textCEP.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textCEP.getText().equals("Ex:44700-000")) {
+                    textCEP.setText("");
+                    textCEP.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textCEP.getText().isEmpty()) {
+                    textCEP.setText("Ex:44700-000");
+                    textCEP.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textTelefone1.setText("Ex:1191234-5678");
+        textTelefone1.setForeground(Color.GRAY);
+        textTelefone1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textTelefone1.getText().equals("Ex:1191234-5678")) {
+                    textTelefone1.setText("");
+                    textTelefone1.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textTelefone1.getText().isEmpty()) {
+                    textTelefone1.setText("Ex:1191234-5678");
+                    textTelefone1.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textTelefone2.setText("Ex:1191234-5678");
+        textTelefone2.setForeground(Color.GRAY);
+        textTelefone2.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textTelefone2.getText().equals("Ex:1191234-5678")) {
+                    textTelefone2.setText("");
+                    textTelefone2.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textTelefone2.getText().isEmpty()) {
+                    textTelefone2.setText("Ex:1191234-5678");
+                    textTelefone2.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textEmail.setText("Ex:teste@teste.com");
+        textEmail.setForeground(Color.GRAY);
+        textEmail.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textEmail.getText().equals("Ex:teste@teste.com")) {
+                    textEmail.setText("");
+                    textEmail.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textEmail.getText().isEmpty()) {
+                    textEmail.setText("Ex:teste@teste.com");
+                    textEmail.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textSite.setText("Ex:teste.com");
+        textSite.setForeground(Color.GRAY);
+        textSite.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textSite.getText().equals("Ex:teste.com")) {
+                    textSite.setText("");
+                    textSite.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textSite.getText().isEmpty()) {
+                    textSite.setText("Ex:teste.com");
+                    textSite.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textNomeEspecialista.setText("Ex:Bruce Wayne");
+        textNomeEspecialista.setForeground(Color.GRAY);
+        textNomeEspecialista.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textNomeEspecialista.getText().equals("Ex:Bruce Wayne")) {
+                    textNomeEspecialista.setText("");
+                    textNomeEspecialista.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textNomeEspecialista.getText().isEmpty()) {
+                    textNomeEspecialista.setText("Ex:Bruce Wayne");
+                    textNomeEspecialista.setForeground(Color.GRAY);
+                }
+            }
+        });
+
+        textEspecialidade.setText("Ex:Professor");
+        textEspecialidade.setForeground(Color.GRAY);
+        textEspecialidade.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textEspecialidade.getText().equals("Ex:Professor")) {
+                    textEspecialidade.setText("");
+                    textEspecialidade.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textEspecialidade.getText().isEmpty()) {
+                    textEspecialidade.setText("Ex:Professor");
+                    textEspecialidade.setForeground(Color.GRAY);
                 }
             }
         });
