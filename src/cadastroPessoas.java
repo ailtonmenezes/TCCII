@@ -71,8 +71,6 @@ public class cadastroPessoas extends JFrame {
         JButton btnSalvar = new JButton("Salvar");
         JButton btnLimpar = new JButton("Limpar");
         JButton btnSair = new JButton("Sair");
-        JLabel consultor = new JLabel("Consultor:");
-        JLabel idConsultor = new JLabel("nome");
 
         // Cria os grupos
         ButtonGroup groupSexo = new ButtonGroup();
@@ -484,8 +482,6 @@ public class cadastroPessoas extends JFrame {
         add(btnSalvar);
         add(btnLimpar);
         add(btnSair);
-        add(consultor);
-        add(idConsultor);
 
         // Criar Menu
         JMenuBar menuBar = new JMenuBar();
@@ -611,8 +607,6 @@ public class cadastroPessoas extends JFrame {
         btnSalvar.setBounds(450, 600, 80, 30);
         btnLimpar.setBounds(600, 600, 80, 30);
         btnSair.setBounds(750, 600, 80, 30);
-        consultor.setBounds(50, 650, 80, 30);
-        idConsultor.setBounds(115, 650, 80, 30);
 
         textInformacoesFamiliares.setLineWrap(true);
         textInformacoesFamiliares.setWrapStyleWord(true);

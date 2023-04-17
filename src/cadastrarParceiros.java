@@ -17,7 +17,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import java.awt.Dimension;
 import javax.swing.*;
 
 public class cadastrarParceiros extends JFrame {
@@ -34,6 +33,11 @@ public class cadastrarParceiros extends JFrame {
 
         // Cria itens
         Font font = new Font("Arial", Font.BOLD, 30);
+        JLabel labelCadastrar = new JLabel("Cadastrar Usuário e Senha");
+        JLabel labelLogin = new JLabel("Cadastrar Login:");
+        JTextField textLogin = new JTextField();
+        JLabel labelPassword = new JLabel("Cadastrar Senha:");
+        JPasswordField textPassword = new JPasswordField();
         JLabel titulo = new JLabel("Cadastro de Parceiros");
         JLabel labelRazaoSocial = new JLabel("Razão Social:");
         JTextField textRazaoSocial = new JTextField();
@@ -79,6 +83,11 @@ public class cadastrarParceiros extends JFrame {
 
         // Adiciona Itens
         add(titulo);
+        add(labelCadastrar);
+        add(labelLogin);
+        add(textLogin);
+        add(labelPassword);
+        add(textPassword);
         add(labelRazaoSocial);
         add(textRazaoSocial);
         add(labelCNPJ);
@@ -230,6 +239,8 @@ public class cadastrarParceiros extends JFrame {
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Obter o texto digitado nas caixas de texto
+                String getUsuario = textLogin.getText();
+                String getSenha = new String(textPassword.getPassword());
                 String getRazaoSocial = textRazaoSocial.getText();
                 String getTextCNPJ = textCNPJ.getText();
                 String getTextRua = textRua.getText();
@@ -247,44 +258,65 @@ public class cadastrarParceiros extends JFrame {
                 String getTextEspecialidade = textEspecialidade.getText();
                 String getTipoParceiro = (String) comboBoxTipoParceiro.getSelectedItem();
 
-                try {
-                    // Estabelecer uma conexão com o banco de dados
-                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc",
-                            "root",
-                            "KMvd96ui45!");
+                boolean cnpjValido = false;
+                String mensagemErro = "";
+                String cnpjFormatado = getTextCNPJ.replaceAll("[^0-9]+", "");
+                if (cnpjFormatado.length() != 14) {
+                    mensagemErro = "CNPJ inválido. Por favor, digite um CNPJ válido.";
+                } else {
+                    try {
+                        Long.parseLong(cnpjFormatado);
+                        cnpjValido = true;
+                    } catch (NumberFormatException ex) {
+                        mensagemErro = "CNPJ inválido. Por favor, digite um CNPJ válido.";
+                    }
+                }
 
-                    // Criar uma declaração SQL preparada
-                    PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT INTO parceiros (razao_social, cnpj, rua, numero, complemento, bairro, cidade, uf, cep, telefone1, telefone2, email, site, nome_especialista, especialidade, tipo_parceiro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    stmt.setString(1, getRazaoSocial);
-                    stmt.setString(2, getTextCNPJ);
-                    stmt.setString(3, getTextRua);
-                    stmt.setString(4, getTextNumero);
-                    stmt.setString(5, getTextComplemento);
-                    stmt.setString(6, getTextBairro);
-                    stmt.setString(7, getTextCidade);
-                    stmt.setString(8, getTextUF);
-                    stmt.setString(9, getTextCEP);
-                    stmt.setString(10, getTextTelefone1);
-                    stmt.setString(11, getTextTelefone2);
-                    stmt.setString(12, getEmail);
-                    stmt.setString(13, getSite);
-                    stmt.setString(14, getTextNomeEspecialista);
-                    stmt.setString(15, getTextEspecialidade);
-                    stmt.setString(16, getTipoParceiro);
+                if (cnpjValido) {
+                    try {
+                        // Estabelecer uma conexão com o banco de dados
+                        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc",
+                                "root",
+                                "KMvd96ui45!");
 
-                    // Executar a declaração SQL
-                    stmt.executeUpdate();
+                        // Criar uma declaração SQL preparada
+                        PreparedStatement stmt = conn.prepareStatement(
+                                "INSERT INTO parceiros (loginpessoa,senhapessoa,razao_social, cnpj, rua, numero, complemento, bairro, cidade, uf, cep, telefone1, telefone2, email, site, nome_especialista, especialidade, tipo_parceiro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)");
+                        stmt.setString(1, getUsuario);
+                        stmt.setString(2, getSenha);
+                        stmt.setString(3, getRazaoSocial);
+                        stmt.setString(4, getTextCNPJ);
+                        stmt.setString(5, getTextRua);
+                        stmt.setString(6, getTextNumero);
+                        stmt.setString(7, getTextComplemento);
+                        stmt.setString(8, getTextBairro);
+                        stmt.setString(9, getTextCidade);
+                        stmt.setString(10, getTextUF);
+                        stmt.setString(11, getTextCEP);
+                        stmt.setString(12, getTextTelefone1);
+                        stmt.setString(13, getTextTelefone2);
+                        stmt.setString(14, getEmail);
+                        stmt.setString(15, getSite);
+                        stmt.setString(16, getTextNomeEspecialista);
+                        stmt.setString(17, getTextEspecialidade);
+                        stmt.setString(18, getTipoParceiro);
 
-                    // Fechar a conexão com o banco de dados
-                    conn.close();
+                        // Executar a declaração SQL
+                        stmt.executeUpdate();
 
-                    // Exibir uma mensagem de sucesso
-                    JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+                        // Fechar a conexão com o banco de dados
+                        conn.close();
 
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
-                    ex.printStackTrace();
+                        // Exibir uma mensagem de sucesso
+                        JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+
+                    } catch (SQLException ex) {
+                        // Verificar senhas cadastradas
+                        JOptionPane.showMessageDialog(null, "Houve um erro ao tentar salvar o cadastro!!");
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, mensagemErro);
                 }
             }
         });
@@ -310,12 +342,12 @@ public class cadastrarParceiros extends JFrame {
             }
         });
 
-        textCNPJ.setText("Informe o CNPJ");
+        textCNPJ.setText("CNPJ com 14 números sem caracteres especiais");
         textCNPJ.setForeground(Color.GRAY);
         textCNPJ.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textCNPJ.getText().equals("Informe o CNPJ")) {
+                if (textCNPJ.getText().equals("CNPJ com 14 números sem caracteres especiais")) {
                     textCNPJ.setText("");
                     textCNPJ.setForeground(Color.BLACK);
                 }
@@ -324,7 +356,7 @@ public class cadastrarParceiros extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 if (textCNPJ.getText().isEmpty()) {
-                    textCNPJ.setText("Informe o CNPJ");
+                    textCNPJ.setText("CNPJ com 14 números sem caracteres especiais");
                     textCNPJ.setForeground(Color.GRAY);
                 }
             }
@@ -627,6 +659,11 @@ public class cadastrarParceiros extends JFrame {
         textNomeEspecialista.setBounds(165, 450, 350, 20);
         labelEspecialidade.setBounds(530, 450, 350, 20);
         textEspecialidade.setBounds(620, 450, 350, 20);
+        labelCadastrar.setBounds(1000, 420, 350, 20);
+        labelLogin.setBounds(1000, 450, 350, 20);
+        textLogin.setBounds(1100, 450, 130, 20);
+        labelPassword.setBounds(1000, 480, 350, 20);
+        textPassword.setBounds(1100, 480, 130, 20);
         btnSalvar.setBounds(400, 600, 100, 20);
         btnLimpar.setBounds(600, 600, 100, 20);
         btnSair.setBounds(800, 600, 100, 20);
