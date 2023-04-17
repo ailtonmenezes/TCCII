@@ -3,17 +3,12 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class localizaCadastroParceiros extends JFrame {
     public localizaCadastroParceiros() {
-        String url = "jdbc:mysql://localhost:3306/unicesumartcc";
-        String usuario = "root";
-        String senha = "KMvd96ui45!";
-
         // solicita a entrada do usuário para o nome ou CNPJ a ser pesquisado
         JTextField nomeCnpjField = new JTextField();
         Object[] message = { "Nome ou CNPJ:", nomeCnpjField };
@@ -29,7 +24,7 @@ public class localizaCadastroParceiros extends JFrame {
             String sql = "SELECT id, loginpessoa,senhapessoa,razao_social, cnpj, tipo_parceiro, rua, numero, complemento, bairro, cidade, uf, cep, telefone1, telefone2, email, site, nome_especialista, especialidade FROM parceiros WHERE razao_social LIKE ? OR cnpj = ?";
 
             // tenta estabelecer a conexão com o banco de dados e executar a consulta
-            try (Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            try (Connection conexao = configMySQL.getInstance().getConnection();
                     PreparedStatement declaracao = conexao.prepareStatement(sql)) {
                 declaracao.setString(1, "%" + nomeCnpj + "%");
                 declaracao.setString(2, nomeCnpj);

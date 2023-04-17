@@ -12,10 +12,6 @@ import javax.swing.JOptionPane;
 
 public class localizaCadastroPessoa extends JFrame {
     public localizaCadastroPessoa() {
-        String url = "jdbc:mysql://localhost:3306/unicesumartcc";
-        String usuario = "root";
-        String senha = "KMvd96ui45!";
-
         // solicita a entrada do usuário para o nome ou CPF a ser pesquisado
         JTextField nomeCpfField = new JTextField();
         Object[] message = {
@@ -34,7 +30,7 @@ public class localizaCadastroPessoa extends JFrame {
             String sql = "SELECT id_pessoa, nome, rg, cpf, profissao, escolaridade, data_nascimento,sexo,naturalidade,uf,estado_civil,escolar,medico,trabalho,moradia,observacoes FROM pessoa WHERE nome LIKE ? OR cpf = ?";
 
             // tenta estabelecer a conexão com o banco de dados e executar a consulta
-            try (Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            try (Connection conexao = configMySQL.getInstance().getConnection();
                     PreparedStatement declaracao = conexao.prepareStatement(sql)) {
                 declaracao.setString(1, "%" + nomeCpf + "%");
                 declaracao.setString(2, nomeCpf);

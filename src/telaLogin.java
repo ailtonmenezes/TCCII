@@ -5,7 +5,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,17 +64,10 @@ public class telaLogin extends JFrame {
                     Class.forName("com.mysql.cj.jdbc.Driver");
 
                     // Estabelecer conexão com o banco de dados
-                    connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/unicesumartcc",
-                            "root",
-                            "KMvd96ui45!");
+                    connection = configMySQL.getInstance().getConnection();
 
                     // Criar a consulta SQL
                     String sql = "SELECT loginpessoa, senhapessoa FROM parceiros ";
-                    // "UNION SELECT loginpessoa, senhapessoa FROM consultor " +
-                    // "UNION SELECT loginpessoa, senhapessoa FROM empresa " +
-                    // "UNION SELECT loginpessoa, senhapessoa FROM inst_ensino " +
-                    // "UNION SELECT loginpessoa, senhapessoa FROM inst_saude";
 
                     statement = connection.prepareStatement(sql);
 

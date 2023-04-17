@@ -9,7 +9,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -211,9 +210,7 @@ public class cadastroPessoas extends JFrame {
 
                     try {
                         // Estabelecer uma conexão com o banco de dados
-                        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unicesumartcc",
-                                "root",
-                                "KMvd96ui45!");
+                        Connection conn = configMySQL.getInstance().getConnection();
 
                         // Criar uma declaração SQL preparada
                         PreparedStatement stmt = conn.prepareStatement(
@@ -607,7 +604,6 @@ public class cadastroPessoas extends JFrame {
         btnSalvar.setBounds(450, 600, 80, 30);
         btnLimpar.setBounds(600, 600, 80, 30);
         btnSair.setBounds(750, 600, 80, 30);
-
         textInformacoesFamiliares.setLineWrap(true);
         textInformacoesFamiliares.setWrapStyleWord(true);
 
