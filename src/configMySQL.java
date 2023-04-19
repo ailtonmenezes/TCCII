@@ -12,7 +12,7 @@ public class configMySQL {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/unicesumartcc",
                     "root",
-                    "KMvd96ui45!");
+                    "Senha do banco de dados!");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }

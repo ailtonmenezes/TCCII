@@ -76,19 +76,19 @@ VALUES (
         'Universidade de Maringá',
         '79265617000199',
         'Instituição de Educação',
-        'Av. Guedner',
+        'Av. Gue',
         '1610',
         'Sem Complemento',
-        'Jardim Aclimacao',
+        'Tatuapé',
         'Maringá',
         'PR',
-        '87050900',
-        '4430276360',
-        '4430276222',
+        '87050915',
+        '4430271111',
+        '4430222222',
         'atendimento@unicesumar.edu.br',
         'https://www.unicesumar.edu.br/',
-        'Janaina Freitas',
-        'Professora Mediadora'
+        'Janaina F',
+        'Professora'
     );
 
 INSERT INTO
@@ -129,8 +129,8 @@ VALUES (
         '4430276222',
         'atendimento@unicesumar.edu.br',
         'https://www.unicesumar.edu.br/',
-        'Rafael Alves Florindo',
-        'Professor de Tecnologia'
+        'Rafael A F',
+        'Professor'
     );
 
 INSERT INTO
