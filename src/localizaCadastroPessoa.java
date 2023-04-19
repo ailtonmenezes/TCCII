@@ -4,7 +4,6 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,16 +66,6 @@ public class localizaCadastroPessoa extends JFrame {
                 // cria um JTable com os dados e as colunas especificados
                 JTable tabela = new JTable(dados, colunas);
 
-                // cria botões de atualizar e sair
-                JButton btnAtualizar = new JButton("Salvar Alterações");
-                JButton btnExcluir = new JButton("Excluir");
-                JButton btnSair = new JButton("Sair");
-
-                JPanel botoes = new JPanel();
-                botoes.add(btnAtualizar);
-                botoes.add(btnExcluir);
-                botoes.add(btnSair);
-
                 // adiciona o JTable a um JScrollPane
                 JScrollPane scrollPane = new JScrollPane(tabela);
                 scrollPane.setViewportView(tabela);
@@ -88,7 +77,6 @@ public class localizaCadastroPessoa extends JFrame {
                 // cria um painel que contém o JScrollPane e o botão
                 JPanel painel = new JPanel(new BorderLayout());
                 painel.add(scrollPane, BorderLayout.CENTER);
-                painel.add(botoes, BorderLayout.SOUTH);
 
                 // cria um JFrame para exibir o painel
                 JFrame frame = new JFrame("Localizar Pessoas");

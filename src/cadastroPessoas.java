@@ -290,7 +290,7 @@ public class cadastroPessoas extends JFrame {
             }
         });
 
-        // Setting the text of the textCPF to "Ex: 12345678911"
+        // Placeholder das infromações
         textCPF.setText("Ex: 12345678911");
         textCPF.setForeground(Color.GRAY);
         textCPF.addFocusListener(new FocusListener() {

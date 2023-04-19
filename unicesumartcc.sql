@@ -5,6 +5,8 @@ USE unicesumartcc;
 CREATE TABLE
     parceiros (
         id INT(11) NOT NULL AUTO_INCREMENT,
+        loginpessoa VARCHAR(20) UNIQUE,
+        senhapessoa VARCHAR(30),
         razao_social VARCHAR(255) NOT NULL,
         cnpj VARCHAR(14) NOT NULL,
         tipo_parceiro VARCHAR(50) NOT NULL,
@@ -28,15 +30,15 @@ CREATE TABLE
     pessoa (
         id_pessoa INT NOT NULL AUTO_INCREMENT,
         nome VARCHAR(30) NOT NULL,
-        profissao VARCHAR(30),
         rg VARCHAR(10),
         cpf VARCHAR(11) UNIQUE,
+        profissao VARCHAR(30),
         escolaridade VARCHAR(30),
         data_nascimento DATE,
         sexo VARCHAR(1),
         naturalidade VARCHAR(30),
         uf VARCHAR(2),
-        estado_civil VARCHAR(1),
+        estado_civil VARCHAR(10),
         escolar VARCHAR(255),
         medico VARCHAR(255),
         trabalho VARCHAR(255),
@@ -48,135 +50,91 @@ CREATE TABLE
     );
 
 INSERT INTO
-    endereco (
+    parceiros (
+        loginpessoa,
+        senhapessoa,
+        razao_social,
+        cnpj,
+        tipo_parceiro,
         rua,
         numero,
         complemento,
         bairro,
         cidade,
-        estado,
-        cep
-    )
-VALUES (
-        "Rua Terror",
-        "50",
-        "Próximo ao Cinema",
-        "Jardim Sinistro",
-        "Gothan",
-        "SP",
-        "08501523"
-    ), (
-        "Rua Esperança",
-        "255",
-        "Próximo ao Planeta Diário",
-        "Jardim da Paz",
-        "SmallVille",
-        "BA",
-        "44800228"
-    ), (
-        "Rua Mangabeiras",
-        "45",
-        "13º Andar",
-        "Vila Urupês",
-        "Jacobina",
-        "BA",
-        "44700000"
-    ), (
-        "Rua Castro Alves",
-        "88",
-        "Próximo a Praça",
-        "Poetas",
-        "Jacobina",
-        "BA",
-        "44700000"
-    ), (
-        "Rua Monsenhor Nuno",
-        "565",
-        "Loja",
-        "Centro",
-        "Suzano",
-        "SP",
-        "08674090"
-    ), (
-        "Rua Lanterna Verde",
-        "123",
-        "Não tem",
-        "Bananeira",
-        "Jacobina",
-        "BA",
-        "44700000"
-    ), (
-        "Rua Tony Stark",
-        "15",
-        "Não tem",
-        "Vingadores",
-        "Jacobina",
-        "BA",
-        "44700000"
-    );
-
-;
-
-INSERT INTO
-    inst_saude(
-        loginpessoa,
-        senhapessoa,
-        razao_social,
+        uf,
+        cep,
         telefone1,
         telefone2,
         email,
-        pagina,
-        id_endereco
+        site,
+        nome_especialista,
+        especialidade
     )
-values (
-        "recuperacao",
-        "recuperacao",
-        "Clinica de Recuperação",
-        "7436218638",
-        "743621545",
-        "clinicarecuperacao@clinica.org",
-        "clinica@vida.com",
-        3
+VALUES (
+        'unicesumarEad',
+        'unicesumar1234',
+        'Universidade de Maringá',
+        '79265617000199',
+        'Instituição de Educação',
+        'Av. Guedner',
+        '1610',
+        'Sem Complemento',
+        'Jardim Aclimacao',
+        'Maringá',
+        'PR',
+        '87050900',
+        '4430276360',
+        '4430276222',
+        'atendimento@unicesumar.edu.br',
+        'https://www.unicesumar.edu.br/',
+        'Janaina Freitas',
+        'Professora Mediadora'
     );
 
 INSERT INTO
-    inst_ensino(
+    parceiros (
         loginpessoa,
         senhapessoa,
         razao_social,
         cnpj,
+        tipo_parceiro,
+        rua,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+        cep,
         telefone1,
         telefone2,
         email,
-        pagina,
-        id_endereco
+        site,
+        nome_especialista,
+        especialidade
     )
-values (
-        "calves",
-        "calves",
-        "Escola Castro Alves",
-        "546585258001",
-        "7436211599",
-        "7436211598",
-        "castroalves@edu.com.br",
-        "escolacastroalves.com.br",
-        3
-    ), (
-        "unicesumar",
-        "unicesumar",
-        "Unicesumar Suzano",
-        "792656170001",
-        "1128913788",
-        "1128913788",
-        "tcc@unicesumar.edu.br",
-        "unicesumar.edu.br",
-        4
+VALUES (
+        'unicesumar',
+        'unicesumar123',
+        'Universidade de Maringá',
+        '79265617000199',
+        'Instituição de Educação',
+        'Av. Guedner',
+        '1610',
+        'Sem Complemento',
+        'Jardim Aclimacao',
+        'Maringá',
+        'PR',
+        '87050900',
+        '4430276360',
+        '4430276222',
+        'atendimento@unicesumar.edu.br',
+        'https://www.unicesumar.edu.br/',
+        'Rafael Alves Florindo',
+        'Professor de Tecnologia'
     );
 
 INSERT INTO
-    consultor(
-        loginpessoa,
-        senhapessoa,
+    pessoa (
         nome,
         rg,
         cpf,
@@ -185,84 +143,66 @@ INSERT INTO
         data_nascimento,
         sexo,
         naturalidade,
+        uf,
         estado_civil,
-        id_endereco
+        escolar,
+        medico,
+        trabalho,
+        moradia,
+        observacoes
     )
 VALUES (
-        "stevieroger",
-        "camerica",
-        "Stevie Roger",
-        "888555",
-        "98765432118",
-        "Médico",
-        "Ensino Superior Completo",
-        "1990-05-18",
-        "M",
-        "Jacobina",
-        "C",
-        5
-    );
-
-INSERT INTO
-    empresa(
-        loginpessoa,
-        senhapessoa,
-        razao_social,
-        cnpj,
-        telefone1,
-        telefone2,
-        email,
-        pagina,
-        id_endereco
-    )
-VALUES (
-        "modernosuper",
-        "mercado",
-        "Supermercado Moderno",
-        "5286541590001",
-        "7436211515",
-        "7436218998",
-        "moderno@gmail.com",
-        "modernosupermercado.com.br",
-        6
+        'Bruce Wayne',
+        '12345678',
+        '12345678911',
+        'Detetive',
+        'Ensino Médio',
+        '1992-02-10',
+        'M',
+        'Suzano',
+        'SP',
+        'Solteiro',
+        'Sim',
+        'Não',
+        'Não',
+        'Não',
+        'Detetive Noturno'
     );
 
 INSERT INTO
     pessoa (
-        loginpessoa,
-        senhapessoa,
         nome,
         rg,
         cpf,
+        profissao,
         escolaridade,
         data_nascimento,
         sexo,
         naturalidade,
+        uf,
         estado_civil,
-        id_endereco
+        escolar,
+        medico,
+        trabalho,
+        moradia,
+        observacoes
     )
 VALUES (
-        "brucewayne",
-        "batman",
-        "Bruce Batman Wayne",
-        "1122234",
-        "11122233345",
-        "Ensino Médio Incompleto",
-        "1989-11-15",
-        "M",
-        "Jacobina-Ba",
-        "S",
-        1
-    ), (
-        "clarkkent",
-        "superman",
-        "Clark Superman Kent",
-        "1122235",
-        "11122233346",
-        "Ensino Médio",
-        "1980-12-19",
-        "M",
-        "Suzano-SP",
-        "V",
-        2
+        'Clark Kent',
+        '12345678',
+        '12345678912',
+        'Detetive',
+        'Ensino Médio',
+        '1990-05-09',
+        'M',
+        'Jabobina',
+        'BA',
+        'Solteiro',
+        'Sim',
+        'Não',
+        'Não',
+        'Não',
+        'Jornalista'
     );
+
+SELECT * FROM parceiros 
